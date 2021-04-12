@@ -1,0 +1,4 @@
+#!/bin/bash
+
+source /home/thomas.callister/virtualEnvs/emcee/bin/activate
+python /home/thomas.callister/RedshiftDistributions/spin-evolution/code/injections/run_injection_qDependence_evol.py
