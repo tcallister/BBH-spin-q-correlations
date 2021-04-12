@@ -1,4 +1,0 @@
-#!/bin/bash
-
-source /home/thomas.callister/virtualEnvs/emcee/bin/activate
-python /home/thomas.callister/RedshiftDistributions/spin-evolution/code/spin_with_q/run_emcee.py
