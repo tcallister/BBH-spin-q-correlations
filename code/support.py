@@ -1,9 +1,6 @@
 import numpy as np
 from scipy.special import erf,erfc
 
-mMin = 5.
-zMax = 3.
-
 def asym(x):
     return -np.exp(-x**2)/np.sqrt(np.pi)/x*(1.-1./(2.*x**2))
 
@@ -19,7 +16,7 @@ def calculate_Gaussian(x, mu, sigma2, low, high):
     y = (1.0/norm)*np.exp((-1.0*(x-mu)*(x-mu))/(2.*sigma2))
     return y
 
-def injection_weights(m1_det,m2_det,s1z_det,s2z_det,z_det):
+def injection_weights(m1_det,m2_det,s1z_det,s2z_det,z_det,mMin=5):
 
     # Load mock detections
     ref_m_min = 2.

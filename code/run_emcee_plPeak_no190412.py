@@ -8,9 +8,11 @@ from likelihoods import *
 
 # -- Set prior bounds --
 priorDict = {
-    'lmbda1':(-5,4),
-    'lmbda2':(-12,-1),
-    'm0':(10,100),
+    'lmbda':(-5,4),
+    'mMax':(60,100),
+    'm0':(20,100),
+    'sigM':(1,10),
+    'fPeak':(0,1),
     'bq':(-2,10),
     'sig_kappa':6.,
     'mu0':(-1,1),
@@ -22,6 +24,7 @@ priorDict = {
 
 # Dicts with samples: 
 sampleDict = np.load("/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/input/sampleDict.pickle")
+sampleDict.pop('S190412m')
 
 mockDetections = h5py.File('/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/input/o3a_bbhpop_inj_info.hdf','r')
 ifar_1 = mockDetections['injections']['ifar_gstlal'].value
@@ -53,7 +56,7 @@ injectionDict = {
         }
 
 nWalkers = 32
-output = "/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/code/output/emcee_samples_BPL"
+output = "/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/code/output/emcee_samples_plPeak_no190412"
 
 # Search for existing chains
 old_chains = np.sort(glob.glob("{0}_r??.npy".format(output)))
@@ -64,16 +67,18 @@ if len(old_chains)==0:
     run_version = 0
 
     # Initialize walkers from random positions in mu-sigma2 parameter space
-    initial_lmbdas1 = np.random.random(nWalkers)*(-2.)
-    initial_lmbdas2 = np.random.random(nWalkers)-7.
+    initial_lmbdas = np.random.random(nWalkers)*(-2.)
+    initial_mMaxs = np.random.random(nWalkers)*20.+80.
     initial_m0s = np.random.random(nWalkers)*10.+30
+    initial_sigMs = np.random.random(nWalkers)*4+1.
+    initial_fs = np.random.random(nWalkers)
     initial_bqs = np.random.random(nWalkers)*2.
     initial_ks = np.random.normal(size=nWalkers,loc=0,scale=1)+2.
     initial_mu0s = np.random.random(nWalkers)*0.05
     initial_sigma0s = np.random.random(nWalkers)*0.5-1.
     initial_alphas = np.random.random(nWalkers)*0.05
     initial_betas = np.random.random(nWalkers)*1.
-    initial_walkers = np.transpose([initial_lmbdas1,initial_lmbdas2,initial_m0s,initial_bqs,initial_ks,initial_mu0s,initial_sigma0s,initial_alphas,initial_betas])
+    initial_walkers = np.transpose([initial_lmbdas,initial_mMaxs,initial_m0s,initial_sigMs,initial_fs,initial_bqs,initial_ks,initial_mu0s,initial_sigma0s,initial_alphas,initial_betas])
 
 # Otherwise resume existing chain
 else:
@@ -93,11 +98,11 @@ print('Initial walkers:')
 print(initial_walkers)
 
 # Dimension of parameter space
-dim = 9
+dim = 11
 
 # Run
 nSteps = 10000
-sampler = mc.EnsembleSampler(nWalkers,dim,logp_brokenPowerLaw,args=[sampleDict,injectionDict,priorDict],threads=16)
+sampler = mc.EnsembleSampler(nWalkers,dim,logp_powerLawPeak,args=[sampleDict,injectionDict,priorDict],threads=16)
 for i,result in enumerate(sampler.sample(initial_walkers,iterations=nSteps)):
     if i%10==0:
         np.save("{0}_r{1:02d}.npy".format(output,run_version),sampler.chain)
