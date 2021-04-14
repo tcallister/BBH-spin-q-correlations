@@ -55,6 +55,11 @@ injectionDict = {
         'weights':pop_reweight
         }
 
+#c = [-3.74295815, 93.72968183, 37.39164282,  4.83988273,  0.10903394,
+#                8.23611621,  0.50632637,  0.91159826, -1.42072518, -2.05348006,
+#                        0.6346486 ]
+
+
 nWalkers = 32
 output = "/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/code/output/emcee_samples_plPeak_no190412"
 

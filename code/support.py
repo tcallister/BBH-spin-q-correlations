@@ -9,12 +9,21 @@ def calculate_Gaussian(x, mu, sigma2, low, high):
     b = (high-mu)/np.sqrt(2*sigma2)
     norm = np.sqrt(sigma2*np.pi/2)*(-erf(a) + erf(b))
 
+    # If difference in error functions produce zero, overwrite with asymptotic expansion
     if np.any(norm==0):
         badInds = np.where(norm==0)
         norm[badInds] = (np.sqrt(sigma2*np.pi/2)*(-asym(a) + asym(b)))[badInds]
 
+    # If differences remain zero, then our domain of interest (-1,1) is so many std. deviations
+    # from the mean that our parametrization is unphysical. In this case, discount this hyperparameter.
+    # This amounts to an additional condition in our hyperprior
+    # NaNs occur when norm is infinitesimal, like 1e-322, such that 1/norm is set to inf and the exponential term is zero
     y = (1.0/norm)*np.exp((-1.0*(x-mu)*(x-mu))/(2.*sigma2))
-    return y
+    if np.any(norm==0) or np.any(y!=y):
+        return np.zeros(x.size)
+
+    else:
+        return y
 
 def injection_weights(m1_det,m2_det,s1z_det,s2z_det,z_det,mMin=5):
 

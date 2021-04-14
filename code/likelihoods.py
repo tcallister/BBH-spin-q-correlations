@@ -280,8 +280,11 @@ def logp_powerLawPeak(c,sampleDict,injectionDict,priorDict):
             # Evaluate marginalized likelihood
             nSamples = p_Chi.size
             pEvidence = np.sum(p_Chi*p_m1*p_m2*p_z*weights/Xeff_prior/old_m1_prior/old_m2_prior/old_pz_prior)/nSamples
-            
+
             # Summation
             logP += np.log(pEvidence)
+
+        if logP!=logP:
+            print("!!!!!!!",c)
 
         return logP
