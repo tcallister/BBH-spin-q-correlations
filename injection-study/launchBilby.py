@@ -50,7 +50,7 @@ injection_parameters = dict(
 
 # Fixed arguments passed into the source model
 waveform_arguments = dict(waveform_approximant='IMRPhenomD',
-                                  reference_frequency=50., minimum_frequency=20.)
+                                  reference_frequency=50., minimum_frequency=15.)
 
 # Create the waveform_generator using a LAL BinaryBlackHole source function
 # the generator will convert all the parameters
@@ -63,10 +63,12 @@ waveform_generator = bilby.gw.WaveformGenerator(
 # Set up interferometers.  In this case we'll use two interferometers
 # (LIGO-Hanford (H1), LIGO-Livingston (L1). These default to their design
 # sensitivity
-ifos = bilby.gw.detector.InterferometerList(['H1', 'L1'])
-psd = bilby.gw.detector.PowerSpectralDensity(asd_file="/home/thomas.callister/RedshiftDistributions/spin-evolution/code/injections/aligo_O3low.txt")
-for interferometer in ifos:
-        interferometer.power_spectral_density = psd
+ifos = bilby.gw.detector.InterferometerList(['H1', 'L1', 'V1'])
+
+ifos[0].power_spectral_density = bilby.gw.detector.PowerSpectralDensity(asd_file="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/aligo_O3actual_H1.txt")
+ifos[1].power_spectral_density = bilby.gw.detector.PowerSpectralDensity(asd_file="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/aligo_O3actual_L1.txt")
+ifos[2].power_spectral_density = bilby.gw.detector.PowerSpectralDensity(asd_file="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/avirgo_O3actual.txt")
+
 ifos.set_strain_data_from_power_spectral_densities(
             sampling_frequency=sampling_frequency, duration=duration,
                 start_time=injection_parameters['geocent_time'] - 3)
@@ -74,24 +76,19 @@ ifos.set_strain_data_from_power_spectral_densities(
 ifos.inject_signal(waveform_generator=waveform_generator,
                            parameters=injection_parameters)
 
-
 # For this analysis, we implemenet the standard BBH priors defined, except for
 # the definition of the time prior, which is defined as uniform about the
 # injected value.
 # Furthermore, we decide to sample in chirp mass and mass ratio, due to the
 # preferred shape for the associated posterior distributions.
-if args.job==18338:
-    priors =  bilby.gw.prior.BBHPriorDict("/home/thomas.callister/RedshiftDistributions/spin-evolution/code/injections/prior_18338.prior")
-elif args.job==18456:
-    priors =  bilby.gw.prior.BBHPriorDict("/home/thomas.callister/RedshiftDistributions/spin-evolution/code/injections/prior_18456.prior")
-elif args.job==44551:
-    priors =  bilby.gw.prior.BBHPriorDict("/home/thomas.callister/RedshiftDistributions/spin-evolution/code/injections/prior_44551.prior")
-elif args.job==20864:
-    priors =  bilby.gw.prior.BBHPriorDict("/home/thomas.callister/RedshiftDistributions/spin-evolution/code/injections/prior_20864.prior")
-elif args.job==47535:
-    priors =  bilby.gw.prior.BBHPriorDict("/home/thomas.callister/RedshiftDistributions/spin-evolution/code/injections/prior_47535.prior")
+#highMasses = [12755, 47652, 49140, 49382]
+lowMasses = [28327]
+#if args.job in highMasses:
+#    priors = bilby.gw.prior.BBHPriorDict("/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/prior_highMass.prior")
+if args.job in lowMasses:
+    priors = bilby.gw.prior.BBHPriorDict("/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/prior_lowMass.prior")
 else:
-    priors =  bilby.gw.prior.BBHPriorDict("/home/thomas.callister/RedshiftDistributions/spin-evolution/code/injections/prior_lowMass.prior")
+    priors =  bilby.gw.prior.BBHPriorDict("/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/prior.prior")
 priors['geocent_time'] = bilby.core.prior.Uniform(minimum=injection_parameters['geocent_time'] - 0.1,maximum=injection_parameters['geocent_time'] + 0.1,name='geocent_time', latex_label='$t_c$', unit='$s$')
 
 # Initialise the likelihood by passing in the interferometer data (ifos) and

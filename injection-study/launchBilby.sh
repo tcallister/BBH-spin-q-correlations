@@ -9,7 +9,7 @@ outdir=$3
 
 mkdir -p $outdir
 
-python /home/thomas.callister/RedshiftDistributions/spin-evolution/code/injections/launchBilby.py \
+python /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/launchBilby.py \
     -job $job \
     -json $json \
     -outdir $outdir

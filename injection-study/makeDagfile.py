@@ -29,5 +29,5 @@ with open(dagfile,'w') as df:
 
     for i in to_inject:
 
-        df.write('JOB {0} /home/thomas.callister/RedshiftDistributions/spin-evolution/code/injections/condor/bilby.sub\n'.format(i))
-        df.write('VARS {0} jobNumber="{0}" json="/home/thomas.callister/RedshiftDistributions/spin-evolution/code/injections/population.json" outdir="/home/thomas.callister/RedshiftDistributions/spin-evolution/code/injections/output/"\n\n'.format(i))
+        df.write('JOB {0} /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub\n'.format(i))
+        df.write('VARS {0} jobNumber="{0}" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"\n\n'.format(i))

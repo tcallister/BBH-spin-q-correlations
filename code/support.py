@@ -23,7 +23,23 @@ def calculate_Gaussian(x, mu, sigma2, low, high):
         return np.zeros(x.size)
 
     else:
+        y[x<low] = 0
+        y[x>high] = 0
         return y
+
+def calculate_Gaussian_2D(x,y,mu_x,sigma2_x,mu_y,sigma2_y,low_x,high_x,low_y,high_y):
+
+    xgrid = np.linspace(low_x,high_x,100)
+    ygrid = np.linspace(low_y,high_y,100)
+    dx = xgrid[1] - xgrid[0]
+    dy = ygrid[1] - ygrid[0]
+
+    X,Y = np.meshgrid(xgrid,ygrid)
+    Z = np.exp(-0.5*(np.square(X-mu_x)/sigma2_x + np.square(Y-mu_y)/sigma2_y))
+    norm = np.sum(Z)*dx*dy
+
+    z = (1./norm)*np.exp(-0.5*(np.square(x-mu_x)/sigma2_x + np.square(y-mu_y)/sigma2_y))
+    return z
 
 def injection_weights(m1_det,m2_det,s1z_det,s2z_det,z_det,mMin=5):
 
@@ -56,6 +72,37 @@ def injection_weights(m1_det,m2_det,s1z_det,s2z_det,z_det,mMin=5):
             
         else:
             ref_p_xeff[i] = (1.+q)/2.
+
+    pop_reweight = 1./(ref_p_xeff*ref_p_m1*ref_p_m2*ref_p_z)
+    pop_reweight[m1_det<mMin] = 0.
+    pop_reweight[m2_det<mMin] = 0.
+    return pop_reweight
+
+def mock_injection_weights(m1_det,m2_det,s1z_det,s2z_det,z_det,mMin=5.):
+
+    # Population from which injections are drawn
+    ref_a1 = -2
+    ref_a2 = -4
+    ref_m0 = 40
+    ref_mMin = 5.
+    ref_mMax = 100.
+    ref_bq = 0.5
+    ref_kappa = 2.
+    ref_mu = 0.
+    ref_chi = 1.
+
+    # Derived quantities
+    q_det = m2_det/m1_det
+    mtot_det = m1_det+m2_det
+    X_det = (m1_det*s1z_det + m2_det*s2z_det)/(m1_det+m2_det)
+
+    ref_p_z = np.power(1.+z_det,ref_kappa-1.)
+    ref_p_m1 = np.zeros(m1_det.size)
+    ref_p_m1[m1_det<ref_m0] = np.power(m1_det[m1_det<ref_m0]/ref_m0,ref_a1)
+    ref_p_m1[m1_det>=ref_m0] = np.power(m1_det[m1_det>=ref_m0]/ref_m0,ref_a2)
+
+    ref_p_m2 = np.power(m2_det,ref_bq)/(m1_det**(1.+ref_bq) - ref_mMin**(1.+ref_bq))
+    ref_p_xeff = calculate_Gaussian(X_det,ref_mu,ref_chi**2,-1,1)
 
     pop_reweight = 1./(ref_p_xeff*ref_p_m1*ref_p_m2*ref_p_z)
     pop_reweight[m1_det<mMin] = 0.

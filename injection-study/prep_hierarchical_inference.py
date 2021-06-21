@@ -140,7 +140,7 @@ for f in bilby_output_files:
     q = m2_SF/m1_SF
             
     # Downselect to a reasonable number of samples
-    nSamps = min(3000,DL.size)
+    nSamps = min(5000,DL.size)
     sampleDraws = np.random.choice(np.arange(DL.size),size=nSamps,replace=False)
     m1_SF = m1_SF[sampleDraws]
     m2_SF = m2_SF[sampleDraws]
@@ -156,7 +156,9 @@ for f in bilby_output_files:
     #pAstro[pAstro<0] = 0 # if pASTRO < 0, make pASTRO = 0
     #p_bilby = calculate_pBilby(m1_SF*(1.+z),m2_SF*(1.+z),z)
     #weights = 1./p_bilby
-    weights = np.ones(Xeff.size)
+    #weights = np.ones(Xeff.size)
+    old_pz_prior = (1.+z)**(-1.)*np.power(1.+z,2.)
+    weights = 1./old_pz_prior
     
     preprocDict = {'z':z,\
                     'weights':weights,\
@@ -165,4 +167,4 @@ for f in bilby_output_files:
                     'Xeff':Xeff,\
                     'Xeff_priors':Xeff_priors,\
                    }
-    np.save('tmp/job_{0}.npy'.format(key),preprocDict)
+    np.save('tmp_5k/job_{0}.npy'.format(key),preprocDict)

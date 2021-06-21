@@ -16,8 +16,10 @@ def dVdz(z):
 # Prepare detector object
 H1 = Detector("H1")
 L1 = Detector("L1")
-#psd = analytical.aLIGOAdVO3LowT1800545(3000, 1., 0.)
-psd = read.from_txt('./aligo_O3low.txt',4096,1.,9.)
+V1 = Detector("V1")
+psd_H1 = read.from_txt('./aligo_O3actual_H1.txt',4096,1,10,is_asd_file=True)
+psd_L1 = read.from_txt('./aligo_O3actual_L1.txt',4096,1,10,is_asd_file=True)
+psd_V1 = read.from_txt('./avirgo_O3actual.txt',4096,1,10,is_asd_file=True)
 
 # Arrays to hold injection values
 saved_m1s = np.array([])
@@ -34,7 +36,7 @@ saved_snrs = np.array([])
 # Choose hyperparameters governing true distribution
 a1 = -2
 a2 = -4
-m0 = 40
+m0 = 35
 mMin = 5
 mMax = 100
 bq = 0.5
@@ -62,17 +64,20 @@ for i,m in enumerate(horizon_component_masses):
     DL = 50.
 
     trial_snr = np.inf
-    while trial_snr>4.:
+    while trial_snr>8.:
         DL = DL*1.5
         hp, hc = get_fd_waveform(approximant="IMRPhenomD", mass1=m, mass2=m,
                                     spin1z=0.95, spin2z=0.95,
                                     inclination=0., distance=DL,
                                     f_lower=15, delta_f=1., f_final=4096.)
-        sqSNR = matchedfilter.overlap(hp,hp,psd=psd,low_frequency_cutoff=15.,normalized=False)
-        trial_snr = np.sqrt(sqSNR)
+        sqSNR1 = matchedfilter.overlap(hp,hp,psd=psd_H1,low_frequency_cutoff=15.,normalized=False)
+        sqSNR2 = matchedfilter.overlap(hp,hp,psd=psd_L1,low_frequency_cutoff=15.,normalized=False)
+        sqSNR3 = matchedfilter.overlap(hp,hp,psd=psd_V1,low_frequency_cutoff=15.,normalized=False)
+        trial_snr = np.sqrt(sqSNR1+sqSNR2+sqSNR3)
         print(m,trial_snr,DL,z_at_value(Planck13.luminosity_distance,DL*u.Mpc))
 
     horizon_zs[i] = z_at_value(Planck13.luminosity_distance,DL*u.Mpc)
+    print(m,horizon_zs[i])
 
 # Loop
 n_det = 0
@@ -133,20 +138,23 @@ while n_det<50000:
     time = 1126259642.413
     Hp, Hx = H1.antenna_pattern(ra, dec, pol, time)
     Lp, Lx = L1.antenna_pattern(ra, dec, pol, time)
+    Vp, Vx = V1.antenna_pattern(ra, dec, pol, time)
     s1 = Hp*hp + Hx*hc
     s2 = Lp*hp + Lx*hc
+    s3 = Vp*hp + Vx*hc
 
     # Compute network SNR
     try:
-        sqSNR1 = matchedfilter.overlap(s1,s1,psd=psd,low_frequency_cutoff=15.,normalized=False)
-        sqSNR2 = matchedfilter.overlap(s2,s2,psd=psd,low_frequency_cutoff=15.,normalized=False)
+        sqSNR1 = matchedfilter.overlap(s1,s1,psd=psd_H1,low_frequency_cutoff=15.,normalized=False)
+        sqSNR2 = matchedfilter.overlap(s2,s2,psd=psd_L1,low_frequency_cutoff=15.,normalized=False)
+        sqSNR3 = matchedfilter.overlap(s3,s3,psd=psd_V1,low_frequency_cutoff=15.,normalized=False)
     except ValueError:
         print(s1)
         print(m1,m2,z)
         break
-    snr = np.sqrt(sqSNR1+sqSNR2)
+    snr = np.sqrt(sqSNR1+sqSNR2+sqSNR3)
 
-    if snr>=8.:
+    if snr>=10.:
 
         n_det += 1
 
