@@ -26,5 +26,6 @@ jobs:
       # Runs a single command using the runners shell
       - name: Build
         run: |
+          pip install --user sphinx
           cd docs/
           make html
