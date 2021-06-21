@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to BBH-spin-q-correlations's documentation!
-===================================================
+Companion code for Callister+ 2021 ("Who Ordered That?")
+========================================================
 
 Contents:
 
