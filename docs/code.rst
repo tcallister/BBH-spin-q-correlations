@@ -98,51 +98,99 @@ Each expects four arguments:
 The following likelihood models are implemented:
 
 :code:`logp_brokenPowerLaw`
-   * **Number of parameters**: 9
-   * **Mass model**: Broken power law for :math:`p(m_1)`; power law for :math:`p(m_2|m_1)`
-   * **Spin model**: Normal distribution for :math:`p(\chi_\mathrm{eff}|q)`, truncated on :math:`-1 \leq \chi_\mathrm{eff} \leq 1`
-   * **Spin vs. mass ratio correlation**: Yes
+   * *Number of parameters*: 9
+   * *Mass model*: Broken power law for :math:`p(m_1)`; power law for :math:`p(m_2|m_1)`
+   * *Spin model*: Normal distribution for :math:`p(\chi_\mathrm{eff}|q)`, truncated on :math:`-1 \leq \chi_\mathrm{eff} \leq 1`
+   * *Spin vs. mass ratio correlation*: Yes
 
 :code:`logp_powerLawPeak`
-   * **Number of parameters**: 11
-   * **Mass model**: Mixture between power law and Gaussian components for :math:`p(m_1)`; power law for :math:`p(m_2|m_1)`
-   * **Spin model**: Normal distribution for :math:`p(\chi_\mathrm{eff}|q)`, truncated on :math:`-1 \leq \chi_\mathrm{eff} \leq 1`
-   * **Spin vs. mass ratio correlation**: Yes
+   * *Number of parameters*: 11
+   * *Mass model*: Mixture between power law and Gaussian components for :math:`p(m_1)`; power law for :math:`p(m_2|m_1)`
+   * *Spin model*: Normal distribution for :math:`p(\chi_\mathrm{eff}|q)`, truncated on :math:`-1 \leq \chi_\mathrm{eff} \leq 1`
+   * *Spin vs. mass ratio correlation*: Yes
 
 :code:`logp_powerLawPeak_gaussianQ`
-   * **Number of parameters**: 12
-   * **Mass model**: Mixture between power law and Gaussian components for :math:`p(m_1)`; Gaussian for :math:`p(m_2|m_1)`
-   * **Spin model**: Normal distribution for :math:`p(\chi_\mathrm{eff}|q)`, truncated on :math:`-1 \leq \chi_\mathrm{eff} \leq 1`
-   * **Spin vs. mass ratio correlation**: Yes
+   * *Number of parameters*: 12
+   * *Mass model*: Mixture between power law and Gaussian components for :math:`p(m_1)`; Gaussian for :math:`p(m_2|m_1)`
+   * *Spin model*: Normal distribution for :math:`p(\chi_\mathrm{eff}|q)`, truncated on :math:`-1 \leq \chi_\mathrm{eff} \leq 1`
+   * *Spin vs. mass ratio correlation*: Yes
 
 :code:`logp_powerLawPeak_bivariateGaussian`
-   * **Number of parameters**: 15
-   * **Mass model**: Mixture between power law and Gaussian components for :math:`p(m_1)`. The joint distribution :math:`p(\chi_\mathrm{eff},q|m_1)` is described as a mixture between two bivariate Gaussians, each with their own means and covariance matrices.
-   * **Spin model**: See above
-   * **Spin vs. mass ratio correlation**: Yes (implicitly)
+   * *Number of parameters*: 15
+   * *Mass model*: Mixture between power law and Gaussian components for :math:`p(m_1)`. The joint distribution :math:`p(\chi_\mathrm{eff},q|m_1)` is described as a mixture between two bivariate Gaussians, each with their own means and covariance matrices.
+   * *Spin model*: See above
+   * *Spin vs. mass ratio correlation*: Yes (implicitly)
 
 :code:`logp_powerLawPeak_variableChiMin`
-   * **Number of parameters**: 12
-   * **Mass model**: Mixture between power law and Gaussian components for :math:`p(m_1)`; Gaussian for :math:`p(m_2|m_1)`
-   * **Spin model**: Normal distribution for :math:`p(\chi_\mathrm{eff}|q)`, truncated on the variable range :math:`\chi_\mathrm{min} \leq \chi_\mathrm{eff} \leq 1`
-   * **Spin vs. mass ratio correlation**: Yes
+   * *Number of parameters*: 12
+   * *Mass model*: Mixture between power law and Gaussian components for :math:`p(m_1)`; Gaussian for :math:`p(m_2|m_1)`
+   * *Spin model*: Normal distribution for :math:`p(\chi_\mathrm{eff}|q)`, truncated on the variable range :math:`\chi_\mathrm{min} \leq \chi_\mathrm{eff} \leq 1`
+   * *Spin vs. mass ratio correlation*: Yes
 
 :code:`logp_powerLawPeak_noEvol`
-   * **Number of parameters**: 9
-   * **Mass model**: Mixture between power law and Gaussian components for :math:`p(m_1)`; power law for :math:`p(m_2|m_1)`
-   * **Spin model**: Normal distribution for :math:`p(\chi_\mathrm{eff})`, truncated on :math:`-1 \leq \chi_\mathrm{eff} \leq 1`
-   * **Spin vs. mass ratio correlation**: No
+   * *Number of parameters*: 9
+   * *Mass model*: Mixture between power law and Gaussian components for :math:`p(m_1)`; power law for :math:`p(m_2|m_1)`
+   * *Spin model*: Normal distribution for :math:`p(\chi_\mathrm{eff})`, truncated on :math:`-1 \leq \chi_\mathrm{eff} \leq 1`
+   * *Spin vs. mass ratio correlation*: No
 
 :code:`logp_powerLawPeak_noEvol_variableChiMin`
-   * **Number of parameters**: 10
-   * **Mass model**: Mixture between power law and Gaussian components for :math:`p(m_1)`; power law for :math:`p(m_2|m_1)`
-   * **Spin model**: Normal distribution for :math:`p(\chi_\mathrm{eff})`, truncated on the variable range :math:`\chi_\mathrm{min} \leq \chi_\mathrm{eff} \leq 1`
-   * **Spin vs. mass ratio correlation**: No
+   * *Number of parameters*: 10
+   * *Mass model*: Mixture between power law and Gaussian components for :math:`p(m_1)`; power law for :math:`p(m_2|m_1)`
+   * *Spin model*: Normal distribution for :math:`p(\chi_\mathrm{eff})`, truncated on the variable range :math:`\chi_\mathrm{min} \leq \chi_\mathrm{eff} \leq 1`
+   * *Spin vs. mass ratio correlation*: No
 
 Running the inference:
 ----------------------
 
-Inference is performed by calling one
+Inference is done by calling these scripts, which invoke the likelihoods listed above together with various subsets of events.
+Unless stated otherwise, the events used are the 44 BBHs in GWTC-2 with false alarm rates below one per year, excluding GW190814.
+
+.. list-table::
+    :widths: 10 10 20
+    :header-rows: 1
+
+    * - Script
+      - Likelihood
+      - Sample
+    * - :file:`run_emcee_bpl.py`
+      - :func:`logp_brokenPowerLaw`
+      - Default
+    * - :file:`run_emcee_plPeak.py`
+      - :func:`logp_powerLawPeak`
+      - Default
+    * - :file:`run_emcee_plPeak_O3only.py`
+      - :func:`logp_powerLawPeak`
+      - Excludes the 10 O1+O2 BBHs
+    * - :file:`run_emcee_plPeak_bivariateGaussian.py`
+      - :func:`logp_powerLawPeak_bivariateGaussian`
+      - Default
+    * - :file:`run_emcee_plPeak_gaussianQ.py`
+      - :func:`logp_powerLawPeak_gaussianQ`
+      - Default
+    * - :file:`run_emcee_plPeak_no190412.py`
+      - :func:`logp_powerLawPeak`
+      - Excludes GW190412
+    * - :file:`run_emcee_plPeak_no190412_no190517.py`
+      - :func:`logp_powerLawPeak`
+      - Excludes GW190412 and GW190517
+    * - :file:`run_emcee_plPeak_no190517.py`
+      - :func:`logp_powerLawPeak`
+      - Excludes GW190517
+    * - :file:`run_emcee_plPeak_noEvol.py`
+      - :func:`logp_powerLawPeak_noEvol`
+      - Default
+    * - :file:`run_emcee_plPeak_noEvol_no190412.py`
+      - :func:`logp_powerLawPeak_noEvol`
+      - Excludes GW190412
+    * - :file:`run_emcee_plPeak_variableChiMin.py`
+      - :func:`logp_powerLawPeak_variableChiMin`
+      - Default
+    * - :file:`run_emcee_plPeak_w190814.py`
+      - :func:`logp_powerLawPeak`
+      - Includes GW190814
+
+
+
 
 Burning and downsampling: :code:`post_processing.py`
 ----------------------------------------------------
