@@ -7,14 +7,16 @@ Companion code for Callister+ 2021 ("Who Ordered That?")
 ========================================================
 
 This code was used to produce results presented in `ArXiv:2106.00521`_
-Testing...
 
-.. _ArXiv:2106.00521 http://arxiv.org/abs/2106.00521
+.. _`ArXiv:2106.00521`: http://arxiv.org/abs/2106.00521
 
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
+
+   input
+   code
 
 
 

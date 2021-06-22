@@ -35,6 +35,8 @@ def inPrior_brokenPowerLaw(c,priorDict):
 
 def logp_brokenPowerLaw(c,sampleDict,injectionDict,priorDict):
 
+    "This is  a test"
+
     # Flat priors, reject samples past boundaries
     if not inPrior_brokenPowerLaw(c,priorDict):
         return -np.inf
