@@ -25,7 +25,7 @@ sys.path.insert(0, os.path.abspath('../code/'))
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autosectionlabel', 'sphinx.ext.autodoc', 'sphinx.ext.autosummary']
+extensions = ['sphinx_rtd_theme','sphinx.ext.autosectionlabel', 'sphinx.ext.autodoc', 'sphinx.ext.autosummary']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
