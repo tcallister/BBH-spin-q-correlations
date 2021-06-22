@@ -1,0 +1,371 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Code &mdash; BBH-spin-q-correlations 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Input" href="input.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BBH-spin-q-correlations
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="input.html">Input</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#auxiliary-functions">Auxiliary functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#likelihood-definitions">Likelihood definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-inference">Running the inference:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#burning-and-downsampling-post-processing-py">Burning and downsampling: <code class="code docutils literal notranslate"><span class="pre">post_processing.py</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BBH-spin-q-correlations</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Code</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/code.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="code">
+<h1>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h1>
+<p>Hierarchical Bayesian inference of the BBH population is performed using code in this directory.</p>
+<div class="section" id="auxiliary-functions">
+<h2>Auxiliary functions<a class="headerlink" href="#auxiliary-functions" title="Permalink to this headline">¶</a></h2>
+<p>The file <code class="file docutils literal notranslate"><span class="pre">support.py</span></code> contains the following auxiliary functions</p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 65%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Method</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">calculate_Gaussian()</span></code></p></td>
+<td><p>Probability density associated with a 1D
+truncated Gaussian.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">calculate_Gaussian_2D()</span></code></p></td>
+<td><p>Probability density associated with a 2D
+truncated Gaussian.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">injection_weights()</span></code></p></td>
+<td><p>Weights used to calculate the LIGO/Virgo detection efficiency.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">mock_injection_weights()</span></code></p></td>
+<td><p>Selection function weights for mock population study.</p></td>
+</tr>
+</tbody>
+</table>
+<p>As discussed in Appendix A of the paper text, selection effects are undone via calculation of the LIGO/Virgo detection efficiency <span class="math notranslate nohighlight">\(\xi(\Lambda)\)</span>, the fraction of BBHs successfully detected given a population described by <span class="math notranslate nohighlight">\(\Lambda\)</span>.
+In practice, this is done via a Monte Carlo averaging of successfully recovered software injections:</p>
+<div class="math notranslate nohighlight">
+\[\xi(\Lambda) \propto \left\langle \frac{p(\theta|\Lambda)}{p_\mathrm{inj}(\theta)}\right\rangle_{\mathrm{found\,injections}}.\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(p(\theta|\Lambda)\)</span> is the probability that a BBH with parameters <span class="math notranslate nohighlight">\(\theta\)</span> arises under our proposed population <span class="math notranslate nohighlight">\(\Lambda\)</span>, while <span class="math notranslate nohighlight">\(p_\mathrm{inj}(\theta)\)</span> is the probability of this BBH arising from the reference population from which injections are drawn.</p>
+<p>The function <code class="xref py py-func docutils literal notranslate"><span class="pre">injection_weights()</span></code> computes the <span class="math notranslate nohighlight">\(w(\theta) = 1/p_\mathrm{inj}(\theta)\)</span> associated with the found injections downloaded from the LIGO/Virgo O2 and O3a data releases (see <a class="reference internal" href="input.html#loading-external-data-products"><span class="std std-ref">Loading external data products</span></a>).
+In particular, weights are calculated assuming that injections are drawn from a population described by:</p>
+<div class="math notranslate nohighlight">
+\[p_\mathrm{inj}(m_1) \propto m_1^{-2.35} \quad (2\,M_\odot \leq m_1 \leq 100\,M_\odot)\]</div>
+<div class="math notranslate nohighlight">
+\[p_\mathrm{inj}(m_2|m_1) \propto m_2^2 \qquad (2\,M_\odot \leq m_2 \leq m_1)\]</div>
+<div class="math notranslate nohighlight">
+\[p_\mathrm{inj}(z) \propto \frac{1}{1+z} \frac{dVc}{dz} (1+z)^2\]</div>
+<div class="math notranslate nohighlight">
+\[p_\mathrm{inj}(\chi_{1,z}) = p_\mathrm{inj}(\chi_{2,z}) = \mathrm{const.} \quad (-1\leq \chi_{1/2,z} \leq 1)\]</div>
+<p>Similarly, we will later perform an end-to-end injection and recovery of a mock BBH population, including the application and subsequent removal of selection effects.
+The function <code class="xref py py-func docutils literal notranslate"><span class="pre">mock_injection_weights()</span></code> will analogously compute the (inverse) injection probabilities associated with our found injections in this study.</p>
+</div>
+<div class="section" id="likelihood-definitions">
+<h2>Likelihood definitions<a class="headerlink" href="#likelihood-definitions" title="Permalink to this headline">¶</a></h2>
+<p>The likelihood functions for each model considered in the paper text are implemented in <code class="file docutils literal notranslate"><span class="pre">likelihoods.py</span></code>.
+Each expects four arguments:</p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">c</span></code>: Array containing proposed hyperparameter values.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">sampleDict</span></code>: Dictionary of preprocessed samples, as constructed via <code class="file docutils literal notranslate"><span class="pre">preprocess_samples.ipynb</span></code> (see <a class="reference internal" href="input.html#preprocessing"><span class="std std-ref">Preprocessing</span></a>).</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">injectionDict</span></code>: Dictionary of successfully-found software injections, together with weight factors as discussed above, used to quantify detection efficiency. Expected format is</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">injectionDict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;m1&#39;</span><span class="p">:</span><span class="n">primary_mass_values</span><span class="p">,</span>
+    <span class="s1">&#39;m2&#39;</span><span class="p">:</span><span class="n">secondary_mass_values</span><span class="p">,</span>
+    <span class="s1">&#39;s1z&#39;</span><span class="p">:</span><span class="n">primary_mass_spins_z_component</span><span class="p">,</span>
+    <span class="s1">&#39;s2z&#39;</span><span class="p">:</span><span class="n">secondary_mass_spins_z_component</span><span class="p">,</span>
+    <span class="s1">&#39;z&#39;</span><span class="p">:</span><span class="n">redshifts</span><span class="p">,</span>
+    <span class="s1">&#39;weights&#39;</span><span class="p">:</span><span class="n">injection_weights</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">priorDict</span></code>: Dictionary containing information about our priors. For all parameters except <code class="code docutils literal notranslate"><span class="pre">kappa</span></code> (redshift evolution) and <code class="code docutils literal notranslate"><span class="pre">mMin</span></code> (minimum black hole mass), entries are tuples listing min/max values. For <code class="code docutils literal notranslate"><span class="pre">kappa</span></code>, meanwhile, we pass a single parameter governing the width of our normal prior distribution. The key <code class="code docutils literal notranslate"><span class="pre">mMin</span></code>, meanwhile, is used to prescribe a fixed minimum BH mass. An example, copied from <code class="code docutils literal notranslate"><span class="pre">run_emcee_plPeak.py</span></code> (see <a class="reference external" href="https://github.com/tcallister/BBH-spin-q-correlations/blob/main/code/run_emcee_plPeak.py">here</a>):</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">priorDict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;lmbda&#39;</span><span class="p">:(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span>
+    <span class="s1">&#39;mMax&#39;</span><span class="p">:(</span><span class="mi">60</span><span class="p">,</span><span class="mi">100</span><span class="p">),</span>
+    <span class="s1">&#39;m0&#39;</span><span class="p">:(</span><span class="mi">20</span><span class="p">,</span><span class="mi">100</span><span class="p">),</span>
+    <span class="s1">&#39;sigM&#39;</span><span class="p">:(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
+    <span class="s1">&#39;fPeak&#39;</span><span class="p">:(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;bq&#39;</span><span class="p">:(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
+    <span class="s1">&#39;sig_kappa&#39;</span><span class="p">:</span><span class="mf">6.</span><span class="p">,</span>
+    <span class="s1">&#39;mu0&#39;</span><span class="p">:(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;log_sigma0&#39;</span><span class="p">:(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">),</span>
+    <span class="s1">&#39;alpha&#39;</span><span class="p">:(</span><span class="o">-</span><span class="mf">2.5</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;beta&#39;</span><span class="p">:(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mf">1.5</span><span class="p">),</span>
+    <span class="s1">&#39;mMin&#39;</span><span class="p">:</span><span class="mf">5.</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>The following likelihood models are implemented:</p>
+<dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">logp_brokenPowerLaw</span></code></dt><dd><ul class="simple">
+<li><p><strong>Number of parameters</strong>: 9</p></li>
+<li><p><strong>Mass model</strong>: Broken power law for <span class="math notranslate nohighlight">\(p(m_1)\)</span>; power law for <span class="math notranslate nohighlight">\(p(m_2|m_1)\)</span></p></li>
+<li><p><strong>Spin model</strong>: Normal distribution for <span class="math notranslate nohighlight">\(p(\chi_\mathrm{eff}|q)\)</span>, truncated on <span class="math notranslate nohighlight">\(-1 \leq \chi_\mathrm{eff} \leq 1\)</span></p></li>
+<li><p><strong>Spin vs. mass ratio correlation</strong>: Yes</p></li>
+</ul>
+</dd>
+<dt><code class="code docutils literal notranslate"><span class="pre">logp_powerLawPeak</span></code></dt><dd><ul class="simple">
+<li><p><strong>Number of parameters</strong>: 11</p></li>
+<li><p><strong>Mass model</strong>: Mixture between power law and Gaussian components for <span class="math notranslate nohighlight">\(p(m_1)\)</span>; power law for <span class="math notranslate nohighlight">\(p(m_2|m_1)\)</span></p></li>
+<li><p><strong>Spin model</strong>: Normal distribution for <span class="math notranslate nohighlight">\(p(\chi_\mathrm{eff}|q)\)</span>, truncated on <span class="math notranslate nohighlight">\(-1 \leq \chi_\mathrm{eff} \leq 1\)</span></p></li>
+<li><p><strong>Spin vs. mass ratio correlation</strong>: Yes</p></li>
+</ul>
+</dd>
+<dt><code class="code docutils literal notranslate"><span class="pre">logp_powerLawPeak_gaussianQ</span></code></dt><dd><ul class="simple">
+<li><p><strong>Number of parameters</strong>: 12</p></li>
+<li><p><strong>Mass model</strong>: Mixture between power law and Gaussian components for <span class="math notranslate nohighlight">\(p(m_1)\)</span>; Gaussian for <span class="math notranslate nohighlight">\(p(m_2|m_1)\)</span></p></li>
+<li><p><strong>Spin model</strong>: Normal distribution for <span class="math notranslate nohighlight">\(p(\chi_\mathrm{eff}|q)\)</span>, truncated on <span class="math notranslate nohighlight">\(-1 \leq \chi_\mathrm{eff} \leq 1\)</span></p></li>
+<li><p><strong>Spin vs. mass ratio correlation</strong>: Yes</p></li>
+</ul>
+</dd>
+<dt><code class="code docutils literal notranslate"><span class="pre">logp_powerLawPeak_bivariateGaussian</span></code></dt><dd><ul class="simple">
+<li><p><strong>Number of parameters</strong>: 15</p></li>
+<li><p><strong>Mass model</strong>: Mixture between power law and Gaussian components for <span class="math notranslate nohighlight">\(p(m_1)\)</span>. The joint distribution <span class="math notranslate nohighlight">\(p(\chi_\mathrm{eff},q|m_1)\)</span> is described as a mixture between two bivariate Gaussians, each with their own means and covariance matrices.</p></li>
+<li><p><strong>Spin model</strong>: See above</p></li>
+<li><p><strong>Spin vs. mass ratio correlation</strong>: Yes (implicitly)</p></li>
+</ul>
+</dd>
+<dt><code class="code docutils literal notranslate"><span class="pre">logp_powerLawPeak_variableChiMin</span></code></dt><dd><ul class="simple">
+<li><p><strong>Number of parameters</strong>: 12</p></li>
+<li><p><strong>Mass model</strong>: Mixture between power law and Gaussian components for <span class="math notranslate nohighlight">\(p(m_1)\)</span>; Gaussian for <span class="math notranslate nohighlight">\(p(m_2|m_1)\)</span></p></li>
+<li><p><strong>Spin model</strong>: Normal distribution for <span class="math notranslate nohighlight">\(p(\chi_\mathrm{eff}|q)\)</span>, truncated on the variable range <span class="math notranslate nohighlight">\(\chi_\mathrm{min} \leq \chi_\mathrm{eff} \leq 1\)</span></p></li>
+<li><p><strong>Spin vs. mass ratio correlation</strong>: Yes</p></li>
+</ul>
+</dd>
+<dt><code class="code docutils literal notranslate"><span class="pre">logp_powerLawPeak_noEvol</span></code></dt><dd><ul class="simple">
+<li><p><strong>Number of parameters</strong>: 9</p></li>
+<li><p><strong>Mass model</strong>: Mixture between power law and Gaussian components for <span class="math notranslate nohighlight">\(p(m_1)\)</span>; power law for <span class="math notranslate nohighlight">\(p(m_2|m_1)\)</span></p></li>
+<li><p><strong>Spin model</strong>: Normal distribution for <span class="math notranslate nohighlight">\(p(\chi_\mathrm{eff})\)</span>, truncated on <span class="math notranslate nohighlight">\(-1 \leq \chi_\mathrm{eff} \leq 1\)</span></p></li>
+<li><p><strong>Spin vs. mass ratio correlation</strong>: No</p></li>
+</ul>
+</dd>
+<dt><code class="code docutils literal notranslate"><span class="pre">logp_powerLawPeak_noEvol_variableChiMin</span></code></dt><dd><ul class="simple">
+<li><p><strong>Number of parameters</strong>: 10</p></li>
+<li><p><strong>Mass model</strong>: Mixture between power law and Gaussian components for <span class="math notranslate nohighlight">\(p(m_1)\)</span>; power law for <span class="math notranslate nohighlight">\(p(m_2|m_1)\)</span></p></li>
+<li><p><strong>Spin model</strong>: Normal distribution for <span class="math notranslate nohighlight">\(p(\chi_\mathrm{eff})\)</span>, truncated on the variable range <span class="math notranslate nohighlight">\(\chi_\mathrm{min} \leq \chi_\mathrm{eff} \leq 1\)</span></p></li>
+<li><p><strong>Spin vs. mass ratio correlation</strong>: No</p></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="running-the-inference">
+<h2>Running the inference:<a class="headerlink" href="#running-the-inference" title="Permalink to this headline">¶</a></h2>
+<p>Inference is performed by calling one</p>
+</div>
+<div class="section" id="burning-and-downsampling-post-processing-py">
+<h2>Burning and downsampling: <code class="code docutils literal notranslate"><span class="pre">post_processing.py</span></code><a class="headerlink" href="#burning-and-downsampling-post-processing-py" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="input.html" class="btn btn-neutral float-left" title="Input" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Tom Callister.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
