@@ -18,7 +18,6 @@ Contents:
    input
    code
 
-This is a test
 
 
 Indices and tables
