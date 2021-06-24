@@ -142,7 +142,8 @@ The following likelihood models are implemented:
 Running the inference:
 ----------------------
 
-Inference is done by calling these scripts, which invoke the likelihoods listed above together with various subsets of events.
+We use the MCMC package *emcee* [1]_ to perform the majority of our inference and parameter estimation.
+Inference with *emcee* is done by calling these scripts, which invoke the likelihoods listed above together with various subsets of events.
 Unless stated otherwise, the events used are the 44 BBHs in GWTC-2 with false alarm rates below one per year, excluding GW190814.
 
 .. list-table::
@@ -189,8 +190,176 @@ Unless stated otherwise, the events used are the 44 BBHs in GWTC-2 with false al
       - :func:`logp_powerLawPeak`
       - Includes GW190814
 
+.. note::
 
+    The scripts above are written to run on the Caltech LIGO computing cluster, and by default may attempt to initiate a large number of parallel processes.
+    If running scripts locally, you may wish to reduce the number of threads prepared when defining an :code:`emcee.EnsembleSampler` object.
+    For example, changing
 
+    .. code-block:: python
 
-Burning and downsampling: :code:`post_processing.py`
-----------------------------------------------------
+        sampler = mc.EnsembleSampler(
+            nWalkers,dim,logp_powerLawPeak_bivariateGaussian,
+            args=[sampleDict,injectionDict,priorDict],
+            threads=12)
+
+    to
+
+    .. code-block:: python
+
+        sampler = mc.EnsembleSampler(
+            nWalkers,dim,logp_powerLawPeak_bivariateGaussian,
+            args=[sampleDict,injectionDict,priorDict],
+            threads=4)
+    
+    reduces the number of parallel processes from 12 to 4.
+
+These scripts all implement a somewhat crude checkpointing.
+Running any of the :file:`run_emcee_*.py` scripts will create a file of the form :file:`~/code/output/emcee_samples_*_r00.npy` storing posterior samples.
+This file is regularly overwritten during the sampling, so that a run in progress can be monitored.
+If a run is interrupted and :file:`run_emcee_*.py` restarted, it will search for an existing output file.
+If one exists, then the final walker positions from this previous halted run will be loaded and used to initialize new walker locations.
+Subsequent output will now be written to :file:`~/code/output/emcee_samples_*_r01.npy`.
+If this run is in turn interrupted and relaunched, output will be written to :file:`~/code/output/emcee_samples_*_r02.npy`, etc.
+    
+Post-processing
+---------------
+
+The output files above contain raw output in the form of an :code:`(n,N,m)` dimensional array, where :code:`n` is the number of parallel walkers used, :code:`N` is the number of MCMC steps, and :code:`m` the number of dimensions in the particular likelihood model.
+
+.. code-block:: python
+
+    >>> import numpy as np
+    >>> output = np.load('emcee_samples_plPeak_r00.npy')
+    >>> output.shape
+    (32, 10000, 11)
+
+To obtain a final set of uncorrelated posterior samples, the script :file:`post_processing.py` can be used to (i) discard a burn-in periord from each walker, (ii) downsample each chain, and (iii) collapse and combine samples from different walkers.
+By default, this script burns the first third of every chain and downsamples by twice the maximum autocorrelation length (maximized across all walkers and varaibles), but it's always best to inspect raw chains and verify that these choices are appropriate.
+
+.. code-block:: bash
+
+    $ cd ~/code/output/
+    $ python ../post_processing.py emcee_samples_plPeak_r00.npy 
+
+    Shape of sample chain:
+    (32, 10000, 11)
+    Shape of burned chain:
+    (32, 6667, 11)
+    Mean correlation length:
+    110.4984881768458
+    Shape of downsampled chain:
+    (32, 31, 11)
+    Shape of downsampled chain post-flattening:
+    (992, 11)
+
+The output of :file:`post_processing.py` is a new file, of the form :file:`~/code/output/processed_emcee_samples_plPeak_r00.npy` containing a 2D array with the burned, downsampled, and collapsed posterior samples.
+
+.. code-block:: python
+
+    >>> import numpy as np
+    >>> processed_output = np.load('processed_emcee_samples_plPeak_r00.npy')
+    >>> processed_output.shape
+    (992, 11)
+
+Evaluating evidences
+--------------------
+
+Although we primarily use *emcee* [1]_ for our parameter estimation, we also use the *dynesty* nested sampler [2]_ to calculate Bayes factors between several different models.
+Nested sampling requires specification of priors in a slightly different way, and so we re-implement likelihoods for models for which we want evidences in the file :file:`dynesty_likelihoods.py`.
+The following four models are defined, two of which are effectively copies of the models defined above in :ref:`Likelihood definitions`
+
+:code:`logp_powerLawPeak`
+   * *Number of parameters*: 11
+   * *Mass model*: Mixture between power law and Gaussian components for :math:`p(m_1)`; power law for :math:`p(m_2|m_1)`
+   * *Spin model*: Normal distribution for :math:`p(\chi_\mathrm{eff}|q)`, truncated on :math:`-1 \leq \chi_\mathrm{eff} \leq 1`
+   * *Spin vs. mass ratio correlation*: Yes
+
+:code:`logp_powerLawPeak_noNeg`
+   * *Number of parameters*: 11
+   * *Mass model*: Mixture between power law and Gaussian components for :math:`p(m_1)`; power law for :math:`p(m_2|m_1)`
+   * *Spin model*: Normal distribution for :math:`p(\chi_\mathrm{eff}|q)`, truncated on :math:`0 \leq \chi_\mathrm{eff} \leq 1`
+   * *Spin vs. mass ratio correlation*: Yes
+
+:code:`logp_powerLawPeak_noEvol`
+   * *Number of parameters*: 9
+   * *Mass model*: Mixture between power law and Gaussian components for :math:`p(m_1)`; power law for :math:`p(m_2|m_1)`
+   * *Spin model*: Normal distribution for :math:`p(\chi_\mathrm{eff})`, truncated on :math:`-1 \leq \chi_\mathrm{eff} \leq 1`
+   * *Spin vs. mass ratio correlation*: No
+
+:code:`logp_powerLawPeak_noEvol_noNeg`
+   * *Number of parameters*: 9
+   * *Mass model*: Mixture between power law and Gaussian components for :math:`p(m_1)`; power law for :math:`p(m_2|m_1)`
+   * *Spin model*: Normal distribution for :math:`p(\chi_\mathrm{eff})`, truncated on :math:`0 \leq \chi_\mathrm{eff} \leq 1`
+   * *Spin vs. mass ratio correlation*: No
+
+Each function expects the same four arguments discussed in :ref:`Likelihood definitions`, and inference with these four models is done by running the following four scripts:
+
+* :file:`run_dynesty_plPeak.py`
+* :file:`run_dynesty_plPeak_noEvol.py`
+* :file:`run_dynesty_plPeak_noEvol_noNeg`
+* :file:`run_dynesty_plPeak_noNeg.py`
+
+.. note::
+
+    As in :ref:`Running the inference`, these scripts are by default set up to launch a decent number of parallel processes.
+    If you wish to reduce this number, then change the lines
+
+    .. code-block:: python
+
+        if os.path.isfile(tmpfile):
+            ...
+            newPool = Pool(16)
+            ...    
+
+        else:
+            sampler = dynesty.NestedSampler(
+                ...
+                pool = Pool(16), queue_size=16,
+                ...
+
+    to
+
+    .. code-block:: python
+
+        if os.path.isfile(tmpfile):
+            ...
+            newPool = Pool(4)
+            ...    
+
+        else:
+            sampler = dynesty.NestedSampler(
+                ...
+                pool = Pool(4), queue_size=4,
+                ...
+
+    to reduce the number of parallel processes from 16 to 4, for example.
+
+To assess uncertainties on reported evidences, we run each of the above scripts several times in parallel.
+Each script therefore expects a unique job number, e.g.
+
+.. code-block:: python
+
+    python run_dynesty_plPeak.py 1
+
+will run this script with a jobnumber of 1.
+
+Temporary checkpointing files are periodically written to the :code:`~/code/dynesty_output/` directory.
+Running the example above, for instance, will yield a checkpoint file :code:`~/code/dynesty_output/dynesty_results_job1.resume.npy`.
+
+Each of the above scripts, when run, will write temporary checkpoint files to the directory :file:`~/code/dynesty_output/`.
+If your run is interrupted, then upon being relaunched *dynesty* will pick back up from the last written checkpoint file.
+
+The end result will be an output file of the form :file:`~/code/dynesty_output/dynesty_results_job1.npy`.
+See the *dynesy* doumentation [2]_ for detailed instructions regarding how to work with this output.
+For our purposes, the final log-evidence for a given model/job can be quickly read out via
+
+.. code-block:: python
+
+    import numpy as np 
+    output_file = "dynesty_results_job1.npy"
+    logz = np.load(output_file,allow_pickle=True)[()]['logz'][-1]
+   
+.. [1] https://emcee.readthedocs.io/en/stable/
+.. [2] https://dynesty.readthedocs.io/en/latest/
+
