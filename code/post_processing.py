@@ -13,9 +13,6 @@ if __name__=="__main__":
     goodInds = np.where(sample_chain[0,:,0]!=0.0)[0]
     sample_chain = sample_chain[:,goodInds,:]
     
-    print("Sample chain:")
-    print(sample_chain)
-    
     print("Shape of sample chain:")
     print(np.shape(sample_chain))
     
