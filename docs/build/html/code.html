@@ -1,0 +1,599 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Code &mdash; BBH-spin-q-correlations 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Mock Population Study" href="injections.html" />
+    <link rel="prev" title="Input" href="input.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BBH-spin-q-correlations
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="input.html">Input</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#auxiliary-functions">Auxiliary functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#likelihood-definitions">Likelihood definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-inference">Running the inference:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#post-processing">Post-processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#evaluating-evidences">Evaluating evidences</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="injections.html">Mock Population Study</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BBH-spin-q-correlations</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Code</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/code.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="code">
+<h1>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h1>
+<p>Hierarchical Bayesian inference of the BBH population is performed using code in this directory.</p>
+<div class="section" id="auxiliary-functions">
+<h2>Auxiliary functions<a class="headerlink" href="#auxiliary-functions" title="Permalink to this headline">¶</a></h2>
+<p>The file <code class="file docutils literal notranslate"><span class="pre">support.py</span></code> contains the following auxiliary functions</p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 65%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Method</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">calculate_Gaussian()</span></code></p></td>
+<td><p>Probability density associated with a 1D
+truncated Gaussian.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">calculate_Gaussian_2D()</span></code></p></td>
+<td><p>Probability density associated with a 2D
+truncated Gaussian.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">injection_weights()</span></code></p></td>
+<td><p>Weights used to calculate the LIGO/Virgo detection efficiency.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">mock_injection_weights()</span></code></p></td>
+<td><p>Selection function weights for mock population study.</p></td>
+</tr>
+</tbody>
+</table>
+<p>As discussed in Appendix A of the paper text, selection effects are undone via calculation of the LIGO/Virgo detection efficiency <span class="math notranslate nohighlight">\(\xi(\Lambda)\)</span>, the fraction of BBHs successfully detected given a population described by <span class="math notranslate nohighlight">\(\Lambda\)</span>.
+In practice, this is done via a Monte Carlo averaging of successfully recovered software injections:</p>
+<div class="math notranslate nohighlight">
+\[\xi(\Lambda) \propto \left\langle \frac{p(\theta|\Lambda)}{p_\mathrm{inj}(\theta)}\right\rangle_{\mathrm{found\,injections}}.\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(p(\theta|\Lambda)\)</span> is the probability that a BBH with parameters <span class="math notranslate nohighlight">\(\theta\)</span> arises under our proposed population <span class="math notranslate nohighlight">\(\Lambda\)</span>, while <span class="math notranslate nohighlight">\(p_\mathrm{inj}(\theta)\)</span> is the probability of this BBH arising from the reference population from which injections are drawn.</p>
+<p>The function <code class="xref py py-func docutils literal notranslate"><span class="pre">injection_weights()</span></code> computes the <span class="math notranslate nohighlight">\(w(\theta) = 1/p_\mathrm{inj}(\theta)\)</span> associated with the found injections downloaded from the LIGO/Virgo O2 and O3a data releases (see <a class="reference internal" href="input.html#loading-external-data-products"><span class="std std-ref">Loading external data products</span></a>).
+In particular, weights are calculated assuming that injections are drawn from a population described by:</p>
+<div class="math notranslate nohighlight">
+\[p_\mathrm{inj}(m_1) \propto m_1^{-2.35} \quad (2\,M_\odot \leq m_1 \leq 100\,M_\odot)\]</div>
+<div class="math notranslate nohighlight">
+\[p_\mathrm{inj}(m_2|m_1) \propto m_2^2 \qquad (2\,M_\odot \leq m_2 \leq m_1)\]</div>
+<div class="math notranslate nohighlight">
+\[p_\mathrm{inj}(z) \propto \frac{1}{1+z} \frac{dVc}{dz} (1+z)^2\]</div>
+<div class="math notranslate nohighlight">
+\[p_\mathrm{inj}(\chi_{1,z}) = p_\mathrm{inj}(\chi_{2,z}) = \mathrm{const.} \quad (-1\leq \chi_{1/2,z} \leq 1)\]</div>
+<p>Similarly, we will later perform an end-to-end injection and recovery of a mock BBH population, including the application and subsequent removal of selection effects.
+The function <code class="xref py py-func docutils literal notranslate"><span class="pre">mock_injection_weights()</span></code> will analogously compute the (inverse) injection probabilities associated with our found injections in this study.</p>
+</div>
+<div class="section" id="likelihood-definitions">
+<h2>Likelihood definitions<a class="headerlink" href="#likelihood-definitions" title="Permalink to this headline">¶</a></h2>
+<p>The likelihood functions for each model considered in the paper text are implemented in <code class="file docutils literal notranslate"><span class="pre">likelihoods.py</span></code>.
+Each expects four arguments:</p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">c</span></code>: Array containing proposed hyperparameter values.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">sampleDict</span></code>: Dictionary of preprocessed samples, as constructed via <code class="file docutils literal notranslate"><span class="pre">preprocess_samples.ipynb</span></code> (see <a class="reference internal" href="input.html#preprocessing"><span class="std std-ref">Preprocessing</span></a>).</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">injectionDict</span></code>: Dictionary of successfully-found software injections, together with weight factors as discussed above, used to quantify detection efficiency. Expected format is</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">injectionDict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;m1&#39;</span><span class="p">:</span><span class="n">primary_mass_values</span><span class="p">,</span>
+    <span class="s1">&#39;m2&#39;</span><span class="p">:</span><span class="n">secondary_mass_values</span><span class="p">,</span>
+    <span class="s1">&#39;s1z&#39;</span><span class="p">:</span><span class="n">primary_mass_spins_z_component</span><span class="p">,</span>
+    <span class="s1">&#39;s2z&#39;</span><span class="p">:</span><span class="n">secondary_mass_spins_z_component</span><span class="p">,</span>
+    <span class="s1">&#39;z&#39;</span><span class="p">:</span><span class="n">redshifts</span><span class="p">,</span>
+    <span class="s1">&#39;weights&#39;</span><span class="p">:</span><span class="n">injection_weights</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">priorDict</span></code>: Dictionary containing information about our priors. For all parameters except <code class="code docutils literal notranslate"><span class="pre">kappa</span></code> (redshift evolution) and <code class="code docutils literal notranslate"><span class="pre">mMin</span></code> (minimum black hole mass), entries are tuples listing min/max values. For <code class="code docutils literal notranslate"><span class="pre">kappa</span></code>, meanwhile, we pass a single parameter governing the width of our normal prior distribution. The key <code class="code docutils literal notranslate"><span class="pre">mMin</span></code>, meanwhile, is used to prescribe a fixed minimum BH mass. An example, copied from <code class="code docutils literal notranslate"><span class="pre">run_emcee_plPeak.py</span></code> (see <a class="reference external" href="https://github.com/tcallister/BBH-spin-q-correlations/blob/main/code/run_emcee_plPeak.py">here</a>):</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">priorDict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;lmbda&#39;</span><span class="p">:(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span>
+    <span class="s1">&#39;mMax&#39;</span><span class="p">:(</span><span class="mi">60</span><span class="p">,</span><span class="mi">100</span><span class="p">),</span>
+    <span class="s1">&#39;m0&#39;</span><span class="p">:(</span><span class="mi">20</span><span class="p">,</span><span class="mi">100</span><span class="p">),</span>
+    <span class="s1">&#39;sigM&#39;</span><span class="p">:(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
+    <span class="s1">&#39;fPeak&#39;</span><span class="p">:(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;bq&#39;</span><span class="p">:(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
+    <span class="s1">&#39;sig_kappa&#39;</span><span class="p">:</span><span class="mf">6.</span><span class="p">,</span>
+    <span class="s1">&#39;mu0&#39;</span><span class="p">:(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;log_sigma0&#39;</span><span class="p">:(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">),</span>
+    <span class="s1">&#39;alpha&#39;</span><span class="p">:(</span><span class="o">-</span><span class="mf">2.5</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;beta&#39;</span><span class="p">:(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mf">1.5</span><span class="p">),</span>
+    <span class="s1">&#39;mMin&#39;</span><span class="p">:</span><span class="mf">5.</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>The following likelihood models are implemented:</p>
+<dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">logp_brokenPowerLaw</span></code></dt><dd><ul class="simple">
+<li><p><em>Number of parameters</em>: 9</p></li>
+<li><p><em>Mass model</em>: Broken power law for <span class="math notranslate nohighlight">\(p(m_1)\)</span>; power law for <span class="math notranslate nohighlight">\(p(m_2|m_1)\)</span></p></li>
+<li><p><em>Spin model</em>: Normal distribution for <span class="math notranslate nohighlight">\(p(\chi_\mathrm{eff}|q)\)</span>, truncated on <span class="math notranslate nohighlight">\(-1 \leq \chi_\mathrm{eff} \leq 1\)</span></p></li>
+<li><p><em>Spin vs. mass ratio correlation</em>: Yes</p></li>
+</ul>
+</dd>
+<dt><code class="code docutils literal notranslate"><span class="pre">logp_powerLawPeak</span></code></dt><dd><ul class="simple">
+<li><p><em>Number of parameters</em>: 11</p></li>
+<li><p><em>Mass model</em>: Mixture between power law and Gaussian components for <span class="math notranslate nohighlight">\(p(m_1)\)</span>; power law for <span class="math notranslate nohighlight">\(p(m_2|m_1)\)</span></p></li>
+<li><p><em>Spin model</em>: Normal distribution for <span class="math notranslate nohighlight">\(p(\chi_\mathrm{eff}|q)\)</span>, truncated on <span class="math notranslate nohighlight">\(-1 \leq \chi_\mathrm{eff} \leq 1\)</span></p></li>
+<li><p><em>Spin vs. mass ratio correlation</em>: Yes</p></li>
+</ul>
+</dd>
+<dt><code class="code docutils literal notranslate"><span class="pre">logp_powerLawPeak_gaussianQ</span></code></dt><dd><ul class="simple">
+<li><p><em>Number of parameters</em>: 12</p></li>
+<li><p><em>Mass model</em>: Mixture between power law and Gaussian components for <span class="math notranslate nohighlight">\(p(m_1)\)</span>; Gaussian for <span class="math notranslate nohighlight">\(p(m_2|m_1)\)</span></p></li>
+<li><p><em>Spin model</em>: Normal distribution for <span class="math notranslate nohighlight">\(p(\chi_\mathrm{eff}|q)\)</span>, truncated on <span class="math notranslate nohighlight">\(-1 \leq \chi_\mathrm{eff} \leq 1\)</span></p></li>
+<li><p><em>Spin vs. mass ratio correlation</em>: Yes</p></li>
+</ul>
+</dd>
+<dt><code class="code docutils literal notranslate"><span class="pre">logp_powerLawPeak_bivariateGaussian</span></code></dt><dd><ul class="simple">
+<li><p><em>Number of parameters</em>: 15</p></li>
+<li><p><em>Mass model</em>: Mixture between power law and Gaussian components for <span class="math notranslate nohighlight">\(p(m_1)\)</span>. The joint distribution <span class="math notranslate nohighlight">\(p(\chi_\mathrm{eff},q|m_1)\)</span> is described as a mixture between two bivariate Gaussians, each with their own means and covariance matrices.</p></li>
+<li><p><em>Spin model</em>: See above</p></li>
+<li><p><em>Spin vs. mass ratio correlation</em>: Yes (implicitly)</p></li>
+</ul>
+</dd>
+<dt><code class="code docutils literal notranslate"><span class="pre">logp_powerLawPeak_variableChiMin</span></code></dt><dd><ul class="simple">
+<li><p><em>Number of parameters</em>: 12</p></li>
+<li><p><em>Mass model</em>: Mixture between power law and Gaussian components for <span class="math notranslate nohighlight">\(p(m_1)\)</span>; Gaussian for <span class="math notranslate nohighlight">\(p(m_2|m_1)\)</span></p></li>
+<li><p><em>Spin model</em>: Normal distribution for <span class="math notranslate nohighlight">\(p(\chi_\mathrm{eff}|q)\)</span>, truncated on the variable range <span class="math notranslate nohighlight">\(\chi_\mathrm{min} \leq \chi_\mathrm{eff} \leq 1\)</span></p></li>
+<li><p><em>Spin vs. mass ratio correlation</em>: Yes</p></li>
+</ul>
+</dd>
+<dt><code class="code docutils literal notranslate"><span class="pre">logp_powerLawPeak_noEvol</span></code></dt><dd><ul class="simple">
+<li><p><em>Number of parameters</em>: 9</p></li>
+<li><p><em>Mass model</em>: Mixture between power law and Gaussian components for <span class="math notranslate nohighlight">\(p(m_1)\)</span>; power law for <span class="math notranslate nohighlight">\(p(m_2|m_1)\)</span></p></li>
+<li><p><em>Spin model</em>: Normal distribution for <span class="math notranslate nohighlight">\(p(\chi_\mathrm{eff})\)</span>, truncated on <span class="math notranslate nohighlight">\(-1 \leq \chi_\mathrm{eff} \leq 1\)</span></p></li>
+<li><p><em>Spin vs. mass ratio correlation</em>: No</p></li>
+</ul>
+</dd>
+<dt><code class="code docutils literal notranslate"><span class="pre">logp_powerLawPeak_noEvol_variableChiMin</span></code></dt><dd><ul class="simple">
+<li><p><em>Number of parameters</em>: 10</p></li>
+<li><p><em>Mass model</em>: Mixture between power law and Gaussian components for <span class="math notranslate nohighlight">\(p(m_1)\)</span>; power law for <span class="math notranslate nohighlight">\(p(m_2|m_1)\)</span></p></li>
+<li><p><em>Spin model</em>: Normal distribution for <span class="math notranslate nohighlight">\(p(\chi_\mathrm{eff})\)</span>, truncated on the variable range <span class="math notranslate nohighlight">\(\chi_\mathrm{min} \leq \chi_\mathrm{eff} \leq 1\)</span></p></li>
+<li><p><em>Spin vs. mass ratio correlation</em>: No</p></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="running-the-inference">
+<h2>Running the inference:<a class="headerlink" href="#running-the-inference" title="Permalink to this headline">¶</a></h2>
+<p>We use the MCMC package <em>emcee</em> <a class="footnote-reference brackets" href="#id5" id="id1">1</a> to perform the majority of our inference and parameter estimation.
+Inference with <em>emcee</em> is done by calling these scripts, which invoke the likelihoods listed above together with various subsets of events.
+Unless stated otherwise, the events used are the 44 BBHs in GWTC-2 with false alarm rates below one per year, excluding GW190814.</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Script</p></th>
+<th class="head"><p>Likelihood</p></th>
+<th class="head"><p>Sample</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">run_emcee_bpl.py</span></code></p></td>
+<td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">logp_brokenPowerLaw()</span></code></p></td>
+<td><p>Default</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">run_emcee_plPeak.py</span></code></p></td>
+<td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">logp_powerLawPeak()</span></code></p></td>
+<td><p>Default</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">run_emcee_plPeak_O3only.py</span></code></p></td>
+<td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">logp_powerLawPeak()</span></code></p></td>
+<td><p>Excludes the 10 O1+O2 BBHs</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">run_emcee_plPeak_bivariateGaussian.py</span></code></p></td>
+<td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">logp_powerLawPeak_bivariateGaussian()</span></code></p></td>
+<td><p>Default</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">run_emcee_plPeak_gaussianQ.py</span></code></p></td>
+<td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">logp_powerLawPeak_gaussianQ()</span></code></p></td>
+<td><p>Default</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">run_emcee_plPeak_no190412.py</span></code></p></td>
+<td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">logp_powerLawPeak()</span></code></p></td>
+<td><p>Excludes GW190412</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">run_emcee_plPeak_no190412_no190517.py</span></code></p></td>
+<td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">logp_powerLawPeak()</span></code></p></td>
+<td><p>Excludes GW190412 and GW190517</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">run_emcee_plPeak_no190517.py</span></code></p></td>
+<td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">logp_powerLawPeak()</span></code></p></td>
+<td><p>Excludes GW190517</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">run_emcee_plPeak_noEvol.py</span></code></p></td>
+<td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">logp_powerLawPeak_noEvol()</span></code></p></td>
+<td><p>Default</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">run_emcee_plPeak_noEvol_no190412.py</span></code></p></td>
+<td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">logp_powerLawPeak_noEvol()</span></code></p></td>
+<td><p>Excludes GW190412</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">run_emcee_plPeak_variableChiMin.py</span></code></p></td>
+<td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">logp_powerLawPeak_variableChiMin()</span></code></p></td>
+<td><p>Default</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">run_emcee_plPeak_w190814.py</span></code></p></td>
+<td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">logp_powerLawPeak()</span></code></p></td>
+<td><p>Includes GW190814</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The scripts above are written to run on the Caltech LIGO computing cluster, and by default may attempt to initiate a large number of parallel processes.
+If running scripts locally, you may wish to reduce the number of threads prepared when defining an <code class="code docutils literal notranslate"><span class="pre">emcee.EnsembleSampler</span></code> object.
+For example, changing</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">EnsembleSampler</span><span class="p">(</span>
+    <span class="n">nWalkers</span><span class="p">,</span><span class="n">dim</span><span class="p">,</span><span class="n">logp_powerLawPeak_bivariateGaussian</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">sampleDict</span><span class="p">,</span><span class="n">injectionDict</span><span class="p">,</span><span class="n">priorDict</span><span class="p">],</span>
+    <span class="n">threads</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>to</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">EnsembleSampler</span><span class="p">(</span>
+    <span class="n">nWalkers</span><span class="p">,</span><span class="n">dim</span><span class="p">,</span><span class="n">logp_powerLawPeak_bivariateGaussian</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">sampleDict</span><span class="p">,</span><span class="n">injectionDict</span><span class="p">,</span><span class="n">priorDict</span><span class="p">],</span>
+    <span class="n">threads</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>reduces the number of parallel processes from 12 to 4.</p>
+</div>
+<p>These scripts all implement a somewhat crude checkpointing.
+Running any of the <code class="file docutils literal notranslate"><span class="pre">run_emcee_*.py</span></code> scripts will create a file of the form <code class="file docutils literal notranslate"><span class="pre">~/code/output/emcee_samples_*_r00.npy</span></code> storing posterior samples.
+This file is regularly overwritten during the sampling, so that a run in progress can be monitored.
+If a run is interrupted and <code class="file docutils literal notranslate"><span class="pre">run_emcee_*.py</span></code> restarted, it will search for an existing output file.
+If one exists, then the final walker positions from this previous halted run will be loaded and used to initialize new walker locations.
+Subsequent output will now be written to <code class="file docutils literal notranslate"><span class="pre">~/code/output/emcee_samples_*_r01.npy</span></code>.
+If this run is in turn interrupted and relaunched, output will be written to <code class="file docutils literal notranslate"><span class="pre">~/code/output/emcee_samples_*_r02.npy</span></code>, etc.</p>
+</div>
+<div class="section" id="post-processing">
+<h2>Post-processing<a class="headerlink" href="#post-processing" title="Permalink to this headline">¶</a></h2>
+<p>The output files above contain raw output in the form of an <code class="code docutils literal notranslate"><span class="pre">(n,N,m)</span></code> dimensional array, where <code class="code docutils literal notranslate"><span class="pre">n</span></code> is the number of parallel walkers used, <code class="code docutils literal notranslate"><span class="pre">N</span></code> is the number of MCMC steps, and <code class="code docutils literal notranslate"><span class="pre">m</span></code> the number of dimensions in the particular likelihood model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;emcee_samples_plPeak_r00.npy&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(32, 10000, 11)</span>
+</pre></div>
+</div>
+<p>To obtain a final set of uncorrelated posterior samples, the script <code class="file docutils literal notranslate"><span class="pre">post_processing.py</span></code> can be used to (i) discard a burn-in periord from each walker, (ii) downsample each chain, and (iii) collapse and combine samples from different walkers.
+By default, this script burns the first third of every chain and downsamples by twice the maximum autocorrelation length (maximized across all walkers and varaibles), but it’s always best to inspect raw chains and verify that these choices are appropriate.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> ~/code/output/
+$ python ../post_processing.py emcee_samples_plPeak_r00.npy
+
+Shape of sample chain:
+<span class="o">(</span><span class="m">32</span>, <span class="m">10000</span>, <span class="m">11</span><span class="o">)</span>
+Shape of burned chain:
+<span class="o">(</span><span class="m">32</span>, <span class="m">6667</span>, <span class="m">11</span><span class="o">)</span>
+Mean correlation length:
+<span class="m">110</span>.4984881768458
+Shape of downsampled chain:
+<span class="o">(</span><span class="m">32</span>, <span class="m">31</span>, <span class="m">11</span><span class="o">)</span>
+Shape of downsampled chain post-flattening:
+<span class="o">(</span><span class="m">992</span>, <span class="m">11</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The output of <code class="file docutils literal notranslate"><span class="pre">post_processing.py</span></code> is a new file, of the form <code class="file docutils literal notranslate"><span class="pre">~/code/output/processed_emcee_samples_plPeak_r00.npy</span></code> containing a 2D array with the burned, downsampled, and collapsed posterior samples.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">processed_output</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;processed_emcee_samples_plPeak_r00.npy&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">processed_output</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(992, 11)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="evaluating-evidences">
+<h2>Evaluating evidences<a class="headerlink" href="#evaluating-evidences" title="Permalink to this headline">¶</a></h2>
+<p>Although we primarily use <em>emcee</em> <a class="footnote-reference brackets" href="#id5" id="id2">1</a> for our parameter estimation, we also use the <em>dynesty</em> nested sampler <a class="footnote-reference brackets" href="#id6" id="id3">2</a> to calculate Bayes factors between several different models.
+Nested sampling requires specification of priors in a slightly different way, and so we re-implement likelihoods for models for which we want evidences in the file <code class="file docutils literal notranslate"><span class="pre">dynesty_likelihoods.py</span></code>.
+The following four models are defined, two of which are effectively copies of the models defined above in <a class="reference internal" href="#likelihood-definitions"><span class="std std-ref">Likelihood definitions</span></a></p>
+<dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">logp_powerLawPeak</span></code></dt><dd><ul class="simple">
+<li><p><em>Number of parameters</em>: 11</p></li>
+<li><p><em>Mass model</em>: Mixture between power law and Gaussian components for <span class="math notranslate nohighlight">\(p(m_1)\)</span>; power law for <span class="math notranslate nohighlight">\(p(m_2|m_1)\)</span></p></li>
+<li><p><em>Spin model</em>: Normal distribution for <span class="math notranslate nohighlight">\(p(\chi_\mathrm{eff}|q)\)</span>, truncated on <span class="math notranslate nohighlight">\(-1 \leq \chi_\mathrm{eff} \leq 1\)</span></p></li>
+<li><p><em>Spin vs. mass ratio correlation</em>: Yes</p></li>
+</ul>
+</dd>
+<dt><code class="code docutils literal notranslate"><span class="pre">logp_powerLawPeak_noNeg</span></code></dt><dd><ul class="simple">
+<li><p><em>Number of parameters</em>: 11</p></li>
+<li><p><em>Mass model</em>: Mixture between power law and Gaussian components for <span class="math notranslate nohighlight">\(p(m_1)\)</span>; power law for <span class="math notranslate nohighlight">\(p(m_2|m_1)\)</span></p></li>
+<li><p><em>Spin model</em>: Normal distribution for <span class="math notranslate nohighlight">\(p(\chi_\mathrm{eff}|q)\)</span>, truncated on <span class="math notranslate nohighlight">\(0 \leq \chi_\mathrm{eff} \leq 1\)</span></p></li>
+<li><p><em>Spin vs. mass ratio correlation</em>: Yes</p></li>
+</ul>
+</dd>
+<dt><code class="code docutils literal notranslate"><span class="pre">logp_powerLawPeak_noEvol</span></code></dt><dd><ul class="simple">
+<li><p><em>Number of parameters</em>: 9</p></li>
+<li><p><em>Mass model</em>: Mixture between power law and Gaussian components for <span class="math notranslate nohighlight">\(p(m_1)\)</span>; power law for <span class="math notranslate nohighlight">\(p(m_2|m_1)\)</span></p></li>
+<li><p><em>Spin model</em>: Normal distribution for <span class="math notranslate nohighlight">\(p(\chi_\mathrm{eff})\)</span>, truncated on <span class="math notranslate nohighlight">\(-1 \leq \chi_\mathrm{eff} \leq 1\)</span></p></li>
+<li><p><em>Spin vs. mass ratio correlation</em>: No</p></li>
+</ul>
+</dd>
+<dt><code class="code docutils literal notranslate"><span class="pre">logp_powerLawPeak_noEvol_noNeg</span></code></dt><dd><ul class="simple">
+<li><p><em>Number of parameters</em>: 9</p></li>
+<li><p><em>Mass model</em>: Mixture between power law and Gaussian components for <span class="math notranslate nohighlight">\(p(m_1)\)</span>; power law for <span class="math notranslate nohighlight">\(p(m_2|m_1)\)</span></p></li>
+<li><p><em>Spin model</em>: Normal distribution for <span class="math notranslate nohighlight">\(p(\chi_\mathrm{eff})\)</span>, truncated on <span class="math notranslate nohighlight">\(0 \leq \chi_\mathrm{eff} \leq 1\)</span></p></li>
+<li><p><em>Spin vs. mass ratio correlation</em>: No</p></li>
+</ul>
+</dd>
+</dl>
+<p>Each function expects the same four arguments discussed in <a class="reference internal" href="#likelihood-definitions"><span class="std std-ref">Likelihood definitions</span></a>, and inference with these four models is done by running the following four scripts:</p>
+<ul class="simple">
+<li><p><code class="file docutils literal notranslate"><span class="pre">run_dynesty_plPeak.py</span></code></p></li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">run_dynesty_plPeak_noEvol.py</span></code></p></li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">run_dynesty_plPeak_noEvol_noNeg</span></code></p></li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">run_dynesty_plPeak_noNeg.py</span></code></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As in <span class="xref std std-ref">Running the inference</span>, these scripts are by default set up to launch a decent number of parallel processes.
+If you wish to reduce this number, then change the lines</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">tmpfile</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="n">newPool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+    <span class="o">...</span>
+
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">sampler</span> <span class="o">=</span> <span class="n">dynesty</span><span class="o">.</span><span class="n">NestedSampler</span><span class="p">(</span>
+        <span class="o">...</span>
+        <span class="n">pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="mi">16</span><span class="p">),</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p>to</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">tmpfile</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="n">newPool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="o">...</span>
+
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">sampler</span> <span class="o">=</span> <span class="n">dynesty</span><span class="o">.</span><span class="n">NestedSampler</span><span class="p">(</span>
+        <span class="o">...</span>
+        <span class="n">pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p>to reduce the number of parallel processes from 16 to 4, for example.</p>
+</div>
+<p>To assess uncertainties on reported evidences, we run each of the above scripts several times in parallel.
+Each script therefore expects a unique job number, e.g.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">run_dynesty_plPeak</span><span class="o">.</span><span class="n">py</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>will run this script with a jobnumber of 1.</p>
+<p>Temporary checkpointing files are periodically written to the <code class="code docutils literal notranslate"><span class="pre">~/code/dynesty_output/</span></code> directory.
+Running the example above, for instance, will yield a checkpoint file <code class="code docutils literal notranslate"><span class="pre">~/code/dynesty_output/dynesty_results_job1.resume.npy</span></code>.</p>
+<p>Each of the above scripts, when run, will write temporary checkpoint files to the directory <code class="file docutils literal notranslate"><span class="pre">~/code/dynesty_output/</span></code>.
+If your run is interrupted, then upon being relaunched <em>dynesty</em> will pick back up from the last written checkpoint file.</p>
+<p>The end result will be an output file of the form <code class="file docutils literal notranslate"><span class="pre">~/code/dynesty_output/dynesty_results_job1.npy</span></code>.
+See the <em>dynesy</em> doumentation <a class="footnote-reference brackets" href="#id6" id="id4">2</a> for detailed instructions regarding how to work with this output.
+For our purposes, the final log-evidence for a given model/job can be quickly read out via</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">output_file</span> <span class="o">=</span> <span class="s2">&quot;dynesty_results_job1.npy&quot;</span>
+<span class="n">logz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span><span class="n">allow_pickle</span><span class="o">=</span><span class="bp">True</span><span class="p">)[()][</span><span class="s1">&#39;logz&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<dl class="footnote brackets">
+<dt class="label" id="id5"><span class="brackets">1</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id2">2</a>)</span></dt>
+<dd><p><a class="reference external" href="https://emcee.readthedocs.io/en/stable/">https://emcee.readthedocs.io/en/stable/</a></p>
+</dd>
+<dt class="label" id="id6"><span class="brackets">2</span><span class="fn-backref">(<a href="#id3">1</a>,<a href="#id4">2</a>)</span></dt>
+<dd><p><a class="reference external" href="https://dynesty.readthedocs.io/en/latest/">https://dynesty.readthedocs.io/en/latest/</a></p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="injections.html" class="btn btn-neutral float-right" title="Mock Population Study" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="input.html" class="btn btn-neutral float-left" title="Input" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Tom Callister.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

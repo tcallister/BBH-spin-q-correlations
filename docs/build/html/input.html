@@ -1,0 +1,328 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Input &mdash; BBH-spin-q-correlations 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Code" href="code.html" />
+    <link rel="prev" title="Companion code for Callister+ 2021 (“Who Ordered That?”)" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BBH-spin-q-correlations
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Input</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#loading-external-data-products">Loading external data products</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#preprocessing">Preprocessing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="injections.html">Mock Population Study</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BBH-spin-q-correlations</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Input</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/input.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="input">
+<h1>Input<a class="headerlink" href="#input" title="Permalink to this headline">¶</a></h1>
+<p>The contents of this directory fetch various external data products (posterior samples, detector sensitivity estimates, etc.) and perform preprocessing in preparation for hierarchical inference of the BBH population.</p>
+<div class="section" id="loading-external-data-products">
+<h2>Loading external data products<a class="headerlink" href="#loading-external-data-products" title="Permalink to this headline">¶</a></h2>
+<p>To load all external sensitivity products, use</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>. copyData.sh
+</pre></div>
+</div>
+<p>This will download and unzip the following files and directories:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>o3a_bbhpop_inj_info.hdf</strong>:</dt><dd><p>Record of successfully recovered software injections of BBH signals into LIGO/Virgo O3a data <a class="footnote-reference brackets" href="#id5" id="id1">1</a>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>injections_O1O2an_spin.h5</strong>:</dt><dd><p>Record of mock BBH signals deemed detectable (based on a semi-analytic sensitivity estimation) in O1 and O2 <a class="footnote-reference brackets" href="#id6" id="id2">2</a>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>all_posterior_samples/</strong>:</dt><dd><p>Parameter estimation results associated with new compact binary detections in O3a <a class="footnote-reference brackets" href="#id7" id="id3">3</a>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>GWTC-1_sample_release/</strong>:</dt><dd><p>Parameter estimation results for compact binary detections made in O1 and O2 <a class="footnote-reference brackets" href="#id8" id="id4">4</a>.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="preprocessing">
+<h2>Preprocessing<a class="headerlink" href="#preprocessing" title="Permalink to this headline">¶</a></h2>
+<p>Next, open and run the following Jupyter notebook:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyter notebook preprocess_samples.ipynb
+</pre></div>
+</div>
+<p>This notebook unpacks the posterior samples downloaded above, downsamples to a smaller number of samples per event, and computes the prior weights on masses, spins, and redshift imposed during parameter estimation.
+Two new files will be created:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>sampleDict_w190814.pickle</strong>:</dt><dd><p>A pickled dictionary containing posterior samples and their prior weights for every BBH candidate in GWTC-2 with a false alarm rate below one per year, including the outlier event GW190814.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>sampleDict.pickle</strong>:</dt><dd><p>As above, but without GW190814.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>These files can be accessed in a Python session via</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">preprocessed_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;sampleDict.pickle&#39;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Data for individual events accessed as keys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">preprocessed_samples</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<span class="go">[u&#39;S190731aa&#39;,</span>
+<span class="go"> u&#39;S190514n&#39;,</span>
+<span class="go"> u&#39;S190828l&#39;,</span>
+<span class="go"> u&#39;GW151012&#39;,</span>
+<span class="go"> u&#39;GW170814&#39;,</span>
+<span class="go"> ...</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Nested dictionary containing samples and weights for each individual event</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">preprocessed_samples</span><span class="p">[</span><span class="s1">&#39;GW150914&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<span class="go">[u&#39;Xeff&#39;, u&#39;cost1&#39;, u&#39;a1&#39;, u&#39;Xeff_priors&#39;, u&#39;cost2&#39;, u&#39;a2&#39;, u&#39;m1&#39;, u&#39;m2&#39;, u&#39;weights&#39;, u&#39;z&#39;]</span>
+</pre></div>
+</div>
+<p>The above dictionary keys denote the following quantities:</p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">Xeff</span></code>: Effective inspiral spin posterior samples</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">a1</span></code>: Posterior samples on the dimensionless spin magnitude of the primary BH</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">a2</span></code>: Posterior samples on the dimensionless spin magnitude of the secondary BH</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">cost1</span></code>: Posterior samples on the spin-orbit (cosine) tilt angle of the primary BH</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">cost2</span></code>: Posterior samples on the spin-orbit (cosine) tilt angle of the secondary BH</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">m1</span></code>: Posterior samples on the mass of the primary BH</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">m2</span></code>: Posterior samples on the mass of the secondary BH</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">z</span></code>: Posterior samples on the redshift of the BBH</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">Xeff_priors</span></code>: Priors associated with the effective spin samples, corresponding to uniform and isotropic component spin priors.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">weights</span></code>: Additional weights with which to convert these posterior samples from a prior that is uniform in detector-frame mass and and Euclidean volume to a new prior that is uniform in <em>source</em>-frame mass and that follows an astrophysically-reasonable redshift evolution:</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[p(z) \propto \frac{1}{1+z} \frac{dV_c}{dz} (1+z)^{2.7}\]</div>
+</div></blockquote>
+<p>where <span class="math notranslate nohighlight">\(\frac{dV_c}{dz}\)</span> is the differential comoving volume per unit redshift.</p>
+</li>
+</ul>
+<dl class="footnote brackets">
+<dt class="label" id="id5"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p><a class="reference external" href="https://dcc.ligo.org/LIGO-P2000217/public">https://dcc.ligo.org/LIGO-P2000217/public</a></p>
+</dd>
+<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p><a class="reference external" href="https://dcc.ligo.org/LIGO-P2000434/public">https://dcc.ligo.org/LIGO-P2000434/public</a></p>
+</dd>
+<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
+<dd><p><a class="reference external" href="https://dcc.ligo.org/LIGO-P2000223/public">https://dcc.ligo.org/LIGO-P2000223/public</a></p>
+</dd>
+<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
+<dd><p><a class="reference external" href="https://dcc.ligo.org/LIGO-P1800370/public">https://dcc.ligo.org/LIGO-P1800370/public</a></p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="code.html" class="btn btn-neutral float-right" title="Code" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Companion code for Callister+ 2021 (“Who Ordered That?”)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Tom Callister.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
