@@ -1,0 +1,13 @@
+universe = vanilla
+executable = /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/launchBilby.sh
+arguments = $(jobNumber) $(json) $(outdir)
+notification = error
+accounting_group = ligo.dev.o3.cbc.bayesianpopulations.parametric
+RequestMemory = 1000
+log = /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/logs/job_$(jobNumber).log
+output = /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/logs/job_$(jobNumber).out
+error = /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/logs/job_$(jobNumber).err
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+queue 1
+

@@ -2,6 +2,7 @@
 *.pickle
 code/condor/*
 injection-study/output/*
+injection-study/condor/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

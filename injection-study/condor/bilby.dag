@@ -1,0 +1,150 @@
+JOB 20456 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 20456 jobNumber="20456" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 12838 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 12838 jobNumber="12838" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 11417 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 11417 jobNumber="11417" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 15322 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 15322 jobNumber="15322" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 23031 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 23031 jobNumber="23031" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 2688 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 2688 jobNumber="2688" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 46717 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 46717 jobNumber="46717" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 2405 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 2405 jobNumber="2405" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 15356 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 15356 jobNumber="15356" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 48467 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 48467 jobNumber="48467" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 47744 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 47744 jobNumber="47744" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 16007 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 16007 jobNumber="16007" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 6677 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 6677 jobNumber="6677" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 27236 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 27236 jobNumber="27236" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 49117 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 49117 jobNumber="49117" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 7289 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 7289 jobNumber="7289" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 28018 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 28018 jobNumber="28018" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 32925 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 32925 jobNumber="32925" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 2121 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 2121 jobNumber="2121" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 27214 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 27214 jobNumber="27214" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 27984 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 27984 jobNumber="27984" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 4546 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 4546 jobNumber="4546" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 32545 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 32545 jobNumber="32545" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 11231 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 11231 jobNumber="11231" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 14121 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 14121 jobNumber="14121" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 24352 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 24352 jobNumber="24352" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 21979 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 21979 jobNumber="21979" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 4003 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 4003 jobNumber="4003" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 49312 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 49312 jobNumber="49312" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 8918 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 8918 jobNumber="8918" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 44849 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 44849 jobNumber="44849" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 49062 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 49062 jobNumber="49062" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 48062 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 48062 jobNumber="48062" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 16297 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 16297 jobNumber="16297" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 16280 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 16280 jobNumber="16280" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 3611 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 3611 jobNumber="3611" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 7842 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 7842 jobNumber="7842" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 28327 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 28327 jobNumber="28327" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 9738 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 9738 jobNumber="9738" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 29624 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 29624 jobNumber="29624" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 8792 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 8792 jobNumber="8792" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 27913 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 27913 jobNumber="27913" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 20238 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 20238 jobNumber="20238" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 19853 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 19853 jobNumber="19853" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 4158 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 4158 jobNumber="4158" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 29266 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 29266 jobNumber="29266" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 8909 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 8909 jobNumber="8909" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 46543 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 46543 jobNumber="46543" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 43454 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 43454 jobNumber="43454" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
+JOB 36773 /home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/condor/bilby.sub
+VARS 36773 jobNumber="36773" json="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/population.json" outdir="/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/output/"
+
