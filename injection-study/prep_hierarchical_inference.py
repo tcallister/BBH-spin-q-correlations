@@ -13,15 +13,6 @@ Omega_Lambda = 1.0-Omega_M
 def Hz(z):
     return H_0*np.sqrt(Omega_M*(1.+z)**3.+Omega_Lambda)
 
-def calculate_pBilby(m1,m2,z):
-
-    # Uniform in (mc,q) to (m1,m2)
-    eta = (m1*m2)/(m1+m2)**2.
-    Mc =  eta**(3./5.)*(m1+m2)
-    Jac = Mc/m1**2.
-    pBilby = (1.+z)**2*Jac
-    return pBilby
-
 def calculate_pASTRO(z, dl):
     dc = dl/(1.+z) # comoving distance 
     dVc_dz = 4*np.pi*c*(dc**2.)/Hz(z) # comoving volume 
@@ -151,12 +142,7 @@ for f in bilby_output_files:
     
     Xeff_priors = alignedPrior(q,Xeff,1.)
 
-    # Redshift and mass priors
-    #pAstro = calculate_pASTRO(z,DL)
-    #pAstro[pAstro<0] = 0 # if pASTRO < 0, make pASTRO = 0
-    #p_bilby = calculate_pBilby(m1_SF*(1.+z),m2_SF*(1.+z),z)
-    #weights = 1./p_bilby
-    #weights = np.ones(Xeff.size)
+    # Redshift prior
     old_pz_prior = (1.+z)**(-1.)*np.power(1.+z,2.)
     weights = 1./old_pz_prior
     
