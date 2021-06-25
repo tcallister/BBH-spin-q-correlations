@@ -95,7 +95,13 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="input.html">Input</a></li>
 <li class="toctree-l1"><a class="reference internal" href="code.html">Code</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Mock Population Study</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Mock Population Study</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#generating-a-mock-population">Generating a mock population</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#choosing-an-injection-set">Choosing an injection set</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-parameter-estimation">Running parameter estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hierarchical-inference">Hierarchical inference</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -167,6 +173,249 @@
 <h1>Mock Population Study<a class="headerlink" href="#mock-population-study" title="Permalink to this headline">¶</a></h1>
 <p>As an end-to-end test for possible systematics, we perform a mock population study in which we draw events from a simulated population, run parameter estimation over these signals, and hierarchically infer the properties of the simulated parent population.
 By design, our mock population has <strong>no intrinsic correlations</strong> between mass ratios and spin; accordingly, we correctly find no correlations between the <span class="math notranslate nohighlight">\(\chi_\mathrm{eff}\)</span> and <span class="math notranslate nohighlight">\(q\)</span> distributions of the parent population.</p>
+<div class="section" id="generating-a-mock-population">
+<h2>Generating a mock population<a class="headerlink" href="#generating-a-mock-population" title="Permalink to this headline">¶</a></h2>
+<p>First, a mock population of detected events is generated via</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python genPopulation.py
+</pre></div>
+</div>
+<p>This script repeatedly draws events from a parent population, computes an expected network signal-to-noise ratio (SNR) using estimates of Hanford, Livingston, and Virgo’s O3a sensitivity, and saves as “detectable” those events with network SNRs above 10.
+This processes repeats until we obtain <span class="math notranslate nohighlight">\(5\times10^4\)</span> such detectable events.</p>
+<p>To help expedite this processes, this script eliminates “hopeless” proposals (those that have no chance of being detected) by calculating a horizon redshift (stored in the array <code class="code docutils literal notranslate"><span class="pre">horizon_zs</span></code>) as a function of binary mass.
+Proposed events that lie beyond this horizon are immediately discarded, without having to generate waveforms and compute waveform inner products.</p>
+<p>The parent population is hardcoded as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Choose hyperparameters governing true distribution</span>
+<span class="n">a1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span>
+<span class="n">m0</span> <span class="o">=</span> <span class="mi">35</span>
+<span class="n">mMin</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">mMax</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">bq</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">kappa</span> <span class="o">=</span> <span class="mf">2.</span>
+<span class="n">mu_chi</span> <span class="o">=</span> <span class="mf">0.</span>
+<span class="n">sig_chi</span> <span class="o">=</span> <span class="mf">1.</span>
+</pre></div>
+</div>
+<p>Proposed primary masses follow a broken power law with indices <code class="code docutils literal notranslate"><span class="pre">a1</span></code> and <code class="code docutils literal notranslate"><span class="pre">a2</span></code>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}p(m_1) \propto
+    \begin{cases}
+    m_1^{a_1} &amp; (m_\mathrm{min} \leq m_1 \leq m_0) \\
+    m_1^{a_2} &amp; (m_0 &lt; m_1 m_\mathrm{max})
+    \end{cases}\end{split}\]</div>
+<p>secondary masses follow a power law with index <code class="code docutils literal notranslate"><span class="pre">bq</span></code>,</p>
+<div class="math notranslate nohighlight">
+\[p(m_2|m_1) \propto m_2^{\beta_q} \quad (m_\mathrm{min}\leq m_2 \leq m_1)\]</div>
+<p>redshifts are distributed as</p>
+<div class="math notranslate nohighlight">
+\[p(z) \propto \frac{1}{1+z} \frac{dV_c}{dz} (1+z)^\kappa\]</div>
+<p>and <span class="math notranslate nohighlight">\(\chi_\mathrm{eff}\)</span> values are normally distributed with mean <code class="code docutils literal notranslate"><span class="pre">mu_chi</span></code> and standard deviation <code class="code docutils literal notranslate"><span class="pre">sig_chi</span></code>.
+Since we only care about <span class="math notranslate nohighlight">\(\chi_\mathrm{eff}\)</span> and not the underlying component spins, for a given event both of the aligned spin components are set to the proposed <span class="math notranslate nohighlight">\(\chi_\mathrm{eff}\)</span> value, such that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\chi_\mathrm{eff}
+    &amp;= \frac{s_{1,z} + q s_{2,z}}{1+q} \\
+    &amp;= \frac{\chi_\mathrm{eff} + q \chi_\mathrm{eff}}{1+q} \\
+    &amp;= \chi_\mathrm{eff}.
+\end{aligned}\end{split}\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <span class="math notranslate nohighlight">\(\chi_\mathrm{eff}\)</span> distribution described here is <strong>not</strong> the <span class="math notranslate nohighlight">\(\chi_\mathrm{eff}\)</span> distribution that we will ultimately adopt as our injected population; see <a class="reference internal" href="#choosing-an-injection-set"><span class="std std-ref">Choosing an injection set</span></a> below.</p>
+</div>
+<p>The output of <code class="code docutils literal notranslate"><span class="pre">genPopulation.py</span></code> is a file <code class="code docutils literal notranslate"><span class="pre">population.json</span></code> containing listing the extrinsic and intrinsic properties of detectable events, as well as a random seed to be used later when generating Gaussian noise as part of parameter estimation.
+The file is most easily parsed as a <code class="code docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> object:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">event_list</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="s1">&#39;population.json&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">event_list</span><span class="o">.</span><span class="n">columns</span>
+<span class="go">Index([u&#39;Dl&#39;, u&#39;a1&#39;, u&#39;a2&#39;, u&#39;dec&#39;, u&#39;inc&#39;, u&#39;m1&#39;, u&#39;m2&#39;, u&#39;ra&#39;, u&#39;seed&#39;,</span>
+<span class="go">   u&#39;snr&#39;, u&#39;z&#39;],</span>
+<span class="go">  dtype=&#39;object&#39;)</span>
+</pre></div>
+</div>
+<p>Events are labeled by indices ranging from 0 to 49999.
+To obtain the properties of a specific index (say, index 11), do</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">event</span> <span class="o">=</span> <span class="n">event_list</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span>
+<span class="go">Dl        1261.271988</span>
+<span class="go">a1           0.207897</span>
+<span class="go">a2           0.207897</span>
+<span class="go">dec          3.239911</span>
+<span class="go">inc          2.719737</span>
+<span class="go">m1          13.374225</span>
+<span class="go">m2          12.097571</span>
+<span class="go">ra           1.412080</span>
+<span class="go">seed    891333.000000</span>
+<span class="go">snr         10.269079</span>
+<span class="go">z            0.243488</span>
+<span class="go">Name: 11.0, dtype: float64</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="choosing-an-injection-set">
+<h2>Choosing an injection set<a class="headerlink" href="#choosing-an-injection-set" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The following workflow is structured primarily to enable usage of the Caltech LIGO computing cluster.
+Running in a different environment will likely require some modification of the steps described below.</p>
+</div>
+<p>Once the file <code class="file docutils literal notranslate"><span class="pre">population.json</span></code> has been created, we now wish to downselect to a catalog of 50 events that we will inject into simulated data and perform parameter estimation on.
+This is accomplished by running the script</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python makeDagfile.py
+</pre></div>
+</div>
+<p>This script randomly draws a subset of 50 events from the proposed population.
+Note that, to ensure good coverage of the full interval <span class="math notranslate nohighlight">\(-1\leq \chi_\mathrm{eff}\leq 1\)</span>, the proposed events in <code class="file docutils literal notranslate"><span class="pre">population.json</span></code> were drawn from a very broad <span class="math notranslate nohighlight">\(chi_\mathrm{eff}\)</span> distribution, centered at zero with a standard deviation of one.
+Observationally, however, we know that the <span class="math notranslate nohighlight">\(\chi_\mathrm{eff}\)</span> distribution is much narrower.
+To produce an injected catalog corresponding to a more realistic spin distribution, the random draws in <code class="file docutils literal notranslate"><span class="pre">makeDagfile.py</span></code> are <em>weighted</em> such that our final catalog corresponds to a BBH population with</p>
+<div class="math notranslate nohighlight">
+\[p(\chi_\mathrm{eff}) ~ N(\chi_\mathrm{eff}|\mu = 0.05, \sigma = 0.15)\]</div>
+<p>Running <code class="file docutils literal notranslate"><span class="pre">makeDagfile.py</span></code> produces two output files:</p>
+<dl>
+<dt><code class="file docutils literal notranslate"><span class="pre">injlist.txt</span></code></dt><dd><p>This file contains the list of 50 events selected from <code class="file docutils literal notranslate"><span class="pre">population.json</span></code> for injection and parameter estimation.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ head injlist.txt
+<span class="m">20456</span>
+<span class="m">12838</span>
+<span class="m">11417</span>
+<span class="m">15322</span>
+<span class="m">23031</span>
+<span class="m">2688</span>
+<span class="m">46717</span>
+<span class="m">2405</span>
+<span class="m">15356</span>
+<span class="m">48467</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="file docutils literal notranslate"><span class="pre">condor/bilby.dag</span></code></dt><dd><p>This is a corresponding dagfile that, on the LIGO Caltech cluster, can be submitted to HTCondor to run parameter estimation over these 50 events.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="running-parameter-estimation">
+<h2>Running parameter estimation<a class="headerlink" href="#running-parameter-estimation" title="Permalink to this headline">¶</a></h2>
+<p>To launch parameter estimation with HTCondor on the LIGO Caltech cluster, do</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> condor/
+$ condor_submit_dag bilby.dag
+</pre></div>
+</div>
+<p>Parameter estimation is done using the <em>Bilby</em> package <a class="footnote-reference brackets" href="#id3" id="id1">1</a> in conjunction with the <em>dynesty</em> nested sampler <a class="footnote-reference brackets" href="#id4" id="id2">2</a>, and is launched with the script <code class="file docutils literal notranslate"><span class="pre">launchBilby.py</span></code>.
+This script takes three arguments:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python launchBilby.py --h
+usage: launchBilby.py <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>-json JSON<span class="o">]</span> <span class="o">[</span>-job JOB<span class="o">]</span> <span class="o">[</span>-outdir OUTDIR<span class="o">]</span>
+
+optional arguments:
+  -h, --help      show this <span class="nb">help</span> message and <span class="nb">exit</span>
+  -json JSON      Json file with population instantiation
+  -job JOB        Job number
+  -outdir OUTDIR  Output directory
+</pre></div>
+</div>
+<p>For example, to begin parameter estimation over event number 20456 (the first entry in <code class="file docutils literal notranslate"><span class="pre">injlist.txt</span></code> above), do</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python launchBilby.py -json ./populations.json -job <span class="m">20456</span> -outdir ./output/
+</pre></div>
+</div>
+<p>Inside <code class="file docutils literal notranslate"><span class="pre">launchBilby.py</span></code>, the relevant injection information is read from <code class="file docutils literal notranslate"><span class="pre">populations.json</span></code>, a corresponding waveform generated, and added into Gaussian noise consistent with Hanford, Livingston, and Virgo O3 PSDs.
+Parameter estimation is then launched, with output written to the <code class="file docutils literal notranslate"><span class="pre">injection-study/output/</span></code> folder.
+By default, all events are run with the same broad prior specified in <code class="file docutils literal notranslate"><span class="pre">prior.prior</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chirp_mass</span> <span class="o">=</span> <span class="n">bilby</span><span class="o">.</span><span class="n">gw</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">UniformInComponentsChirpMass</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;chirp_mass&#39;</span><span class="p">,</span> <span class="n">minimum</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">maximum</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">mass_ratio</span> <span class="o">=</span> <span class="n">bilby</span><span class="o">.</span><span class="n">gw</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">UniformInComponentsMassRatio</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;mass_ratio&#39;</span><span class="p">,</span> <span class="n">minimum</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span><span class="n">maximum</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">luminosity_distance</span> <span class="o">=</span> <span class="n">bilby</span><span class="o">.</span><span class="n">gw</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">UniformSourceFrame</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;luminosity_distance&#39;</span><span class="p">,</span> <span class="n">minimum</span><span class="o">=</span><span class="mf">1e2</span><span class="p">,</span> <span class="n">maximum</span><span class="o">=</span><span class="mf">15e3</span><span class="p">)</span>
+
+<span class="n">dec</span> <span class="o">=</span> <span class="n">Cosine</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;dec&#39;</span><span class="p">)</span>
+<span class="n">ra</span> <span class="o">=</span> <span class="n">Uniform</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;ra&#39;</span><span class="p">,</span> <span class="n">minimum</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">maximum</span><span class="o">=</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">boundary</span><span class="o">=</span><span class="s1">&#39;periodic&#39;</span><span class="p">)</span>
+<span class="n">theta_jn</span> <span class="o">=</span> <span class="n">Sine</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;theta_jn&#39;</span><span class="p">)</span>
+<span class="n">psi</span> <span class="o">=</span> <span class="n">Uniform</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;psi&#39;</span><span class="p">,</span> <span class="n">minimum</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">maximum</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">boundary</span><span class="o">=</span><span class="s1">&#39;periodic&#39;</span><span class="p">)</span>
+<span class="n">phase</span> <span class="o">=</span> <span class="n">Uniform</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;phase&#39;</span><span class="p">,</span> <span class="n">minimum</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">maximum</span><span class="o">=</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">boundary</span><span class="o">=</span><span class="s1">&#39;periodic&#39;</span><span class="p">)</span>
+
+<span class="n">chi_1</span> <span class="o">=</span> <span class="n">bilby</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;spin1&#39;</span><span class="p">,</span><span class="n">latex_label</span><span class="o">=</span><span class="s1">&#39;$\chi_1$&#39;</span><span class="p">,</span><span class="n">minimum</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span><span class="n">maximum</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">chi_2</span> <span class="o">=</span> <span class="n">bilby</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;spin2&#39;</span><span class="p">,</span><span class="n">latex_label</span><span class="o">=</span><span class="s1">&#39;$\chi_2$&#39;</span><span class="p">,</span><span class="n">minimum</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span><span class="n">maximum</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<p>Under this broad prior, however, <em>dynesty</em> may have a hard time finding the likelihood peak for low-mass injections falling near the prior boundary.
+You should always be sure to check posteriors and make sure they look well-behaved.
+For example, the following code block reads out and plots the posterior of one such poorly-behaving run:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">corner</span> <span class="kn">import</span> <span class="n">corner</span>
+
+<span class="c1"># Read file</span>
+<span class="n">f</span> <span class="o">=</span> <span class="s1">&#39;./outout/job_03055_result.json&#39;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">jf</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">jf</span><span class="p">)</span>
+
+<span class="c1"># Extract injected parameters</span>
+<span class="n">inj_chi</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;injection_parameters&#39;</span><span class="p">][</span><span class="s1">&#39;chi_eff&#39;</span><span class="p">]</span>
+<span class="n">inj_q</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;injection_parameters&#39;</span><span class="p">][</span><span class="s1">&#39;mass_ratio&#39;</span><span class="p">]</span>
+<span class="n">inj_m1</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;injection_parameters&#39;</span><span class="p">][</span><span class="s1">&#39;mass_1_source&#39;</span><span class="p">]</span>
+<span class="n">inj_m2</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;injection_parameters&#39;</span><span class="p">][</span><span class="s1">&#39;mass_2_source&#39;</span><span class="p">]</span>
+<span class="n">inj_z</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;injection_parameters&#39;</span><span class="p">][</span><span class="s1">&#39;redshift&#39;</span><span class="p">][</span><span class="s1">&#39;content&#39;</span><span class="p">]</span>
+<span class="n">inj_Mc</span> <span class="o">=</span> <span class="p">(</span><span class="n">inj_q</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">inj_q</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mf">3.</span><span class="o">/</span><span class="mf">5.</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">inj_m1</span><span class="o">+</span><span class="n">inj_m2</span><span class="p">)</span>
+<span class="n">inj_params</span> <span class="o">=</span> <span class="p">[</span><span class="n">inj_chi</span><span class="p">,</span><span class="n">inj_q</span><span class="p">,</span><span class="n">inj_Mc</span><span class="p">,</span><span class="n">inj_z</span><span class="p">]</span>
+
+<span class="c1"># Extract posterior samples</span>
+<span class="n">chiEff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">][</span><span class="s1">&#39;content&#39;</span><span class="p">][</span><span class="s1">&#39;chi_eff&#39;</span><span class="p">])</span>
+<span class="n">m1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">][</span><span class="s1">&#39;content&#39;</span><span class="p">][</span><span class="s1">&#39;mass_1_source&#39;</span><span class="p">])</span>
+<span class="n">m2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">][</span><span class="s1">&#39;content&#39;</span><span class="p">][</span><span class="s1">&#39;mass_2_source&#39;</span><span class="p">])</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">][</span><span class="s1">&#39;content&#39;</span><span class="p">][</span><span class="s1">&#39;redshift&#39;</span><span class="p">])</span>
+<span class="n">s1z</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">][</span><span class="s1">&#39;content&#39;</span><span class="p">][</span><span class="s1">&#39;spin_1z&#39;</span><span class="p">])</span>
+<span class="n">s2z</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">][</span><span class="s1">&#39;content&#39;</span><span class="p">][</span><span class="s1">&#39;spin_2z&#39;</span><span class="p">])</span>
+
+<span class="c1"># Convert to mass ratio and chirp mass</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">m2</span><span class="o">/</span><span class="n">m1</span>
+<span class="n">Mc</span> <span class="o">=</span> <span class="p">(</span><span class="n">q</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">q</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mf">3.</span><span class="o">/</span><span class="mf">5.</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">m1</span><span class="o">+</span><span class="n">m2</span><span class="p">)</span>
+
+<span class="c1"># Make a corner plot of the posterior samples</span>
+<span class="n">ndim</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s2">&quot;$\chi_\mathrm{eff}$&quot;</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$q$&quot;</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$\mathcal{M}_c$&quot;</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$z$&quot;</span><span class="p">]</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">corner</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">([</span><span class="n">chiEff</span><span class="p">,</span><span class="n">q</span><span class="p">,</span><span class="n">Mc</span><span class="p">,</span><span class="n">z</span><span class="p">]),</span><span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">ndim</span><span class="p">,</span> <span class="n">ndim</span><span class="p">))</span>
+
+<span class="c1"># Overplot injected values as horizontal/vertical lines</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ndim</span><span class="p">):</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">inj_params</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">yi</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ndim</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">xi</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">yi</span><span class="p">):</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">yi</span><span class="p">,</span> <span class="n">xi</span><span class="p">]</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">inj_params</span><span class="p">[</span><span class="n">xi</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">inj_params</span><span class="p">[</span><span class="n">yi</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<a class="with-border reference internal image-reference" href="_images/bad_corner.pdf"><img alt="_images/bad_corner.pdf" class="with-border align-center" src="_images/bad_corner.pdf" style="width: 600px;" /></a>
+<p>Note how the injected chirp mass and redshift fall essentially <em>on</em> the prior boundary, and our sampler has completely missed the region where the injection lies.
+In this case, such events should be rerun with restricted priors.
+You might try, for instance, editing the <code class="code docutils literal notranslate"><span class="pre">highMasses</span></code> and <code class="code docutils literal notranslate"><span class="pre">lowMasses</span></code> arrays inside <code class="code docutils literal notranslate"><span class="pre">launchBilby.py</span></code>, which specify events to be run with alternative priors restricted to higher and lower chirp mass ranges:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
+<span class="n">highMasses</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">lowMasses</span> <span class="o">=</span> <span class="p">[</span><span class="mo">03055</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">job</span> <span class="ow">in</span> <span class="n">highMasses</span><span class="p">:</span>
+    <span class="n">priors</span> <span class="o">=</span> <span class="n">bilby</span><span class="o">.</span><span class="n">gw</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">BBHPriorDict</span><span class="p">(</span><span class="s2">&quot;/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/prior_highMass.prior&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">job</span> <span class="ow">in</span> <span class="n">lowMasses</span><span class="p">:</span>
+    <span class="n">priors</span> <span class="o">=</span> <span class="n">bilby</span><span class="o">.</span><span class="n">gw</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">BBHPriorDict</span><span class="p">(</span><span class="s2">&quot;/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/prior_lowMass.prior&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">priors</span> <span class="o">=</span>  <span class="n">bilby</span><span class="o">.</span><span class="n">gw</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">BBHPriorDict</span><span class="p">(</span><span class="s2">&quot;/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/prior.prior&quot;</span><span class="p">)</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>Here I have pointed low mass events to an existing prior file, but new/bespoke priors can be made as needed.
+In the case of event 03055, running with a restricted chirp mass prior yields a much more reasonable posterior:</p>
+<a class="with-border reference internal image-reference" href="_images/good_corner.pdf"><img alt="_images/good_corner.pdf" class="with-border align-center" src="_images/good_corner.pdf" style="width: 600px;" /></a>
+<p>Note that the consistent usage in <code class="file docutils literal notranslate"><span class="pre">launchBilby.py</span></code> of the random seed associated with this event in <code class="file docutils literal notranslate"><span class="pre">population.json</span></code> ensures that the <em>random noise realizations</em> will be consistent across different PE trials.</p>
+</div>
+<div class="section" id="hierarchical-inference">
+<h2>Hierarchical inference<a class="headerlink" href="#hierarchical-inference" title="Permalink to this headline">¶</a></h2>
+<dl class="footnote brackets">
+<dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p><a class="reference external" href="https://lscsoft.docs.ligo.org/bilby/">https://lscsoft.docs.ligo.org/bilby/</a></p>
+</dd>
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p><a class="reference external" href="https://dynesty.readthedocs.io/en/latest/">https://dynesty.readthedocs.io/en/latest/</a></p>
+</dd>
+</dl>
+</div>
 </div>
 
 
