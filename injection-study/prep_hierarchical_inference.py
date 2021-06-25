@@ -167,4 +167,4 @@ for f in bilby_output_files:
                     'Xeff':Xeff,\
                     'Xeff_priors':Xeff_priors,\
                    }
-    np.save('tmp_5k/job_{0}.npy'.format(key),preprocDict)
+    np.save('tmp/job_{0}.npy'.format(key),preprocDict)

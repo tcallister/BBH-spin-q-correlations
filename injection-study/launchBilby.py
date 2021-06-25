@@ -83,10 +83,10 @@ ifos.inject_signal(waveform_generator=waveform_generator,
 # injected value.
 # Furthermore, we decide to sample in chirp mass and mass ratio, due to the
 # preferred shape for the associated posterior distributions.
-#highMasses = [12755, 47652, 49140, 49382]
+highMasses = []
 lowMasses = [28327]
-#if args.job in highMasses:
-#    priors = bilby.gw.prior.BBHPriorDict("/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/prior_highMass.prior")
+if args.job in highMasses:
+    priors = bilby.gw.prior.BBHPriorDict("/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/prior_highMass.prior")
 if args.job in lowMasses:
     priors = bilby.gw.prior.BBHPriorDict("/home/thomas.callister/RedshiftDistributions/BBH-spin-q-correlations/injection-study/prior_lowMass.prior")
 else:
