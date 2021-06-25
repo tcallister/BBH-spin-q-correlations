@@ -12,8 +12,10 @@ args = parser.parse_args()
 
 # Load dataframe and select injection
 injections = pd.read_json(args.json)
-injection = injections.iloc[args.job]
-print(injection)
+injections.sort_index(inplace=True)
+injection = injections.loc[args.job]
+
+sys.exit()
 
 # Set the duration and sampling frequency of the data segment that we're
 # going to inject the signal into
