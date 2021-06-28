@@ -1,6 +1,0 @@
-\newcommand{\evolMean}{0.19^{+0.11}_{-0.09}}
-\newcommand{\evolSigma}{0.09^{+0.15}_{-0.05}}
-\newcommand{\evolAlpha}{-0.46^{+0.29}_{-0.28}}
-\newcommand{\evolBeta}{-0.83^{+1.28}_{-1.01}}
-\newcommand{\evolBetaq}{1.1^{+2.1}_{-1.2}}
-\newcommand{\percentAlphaNegative}{98.7\%}
