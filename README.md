@@ -1,6 +1,6 @@
 # BBH-spin-q-anticorrelation
 
-<p class="aligncenter">
+<p align="center">
     <img src="./docs/images/fig-5.png" width="400"/>
 </p>
 
