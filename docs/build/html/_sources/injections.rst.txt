@@ -275,7 +275,48 @@ Note that the consistent usage in :file:`launchBilby.py` of the random seed asso
 Hierarchical inference
 ----------------------
 
+Running hierarchical inference over our parameter estimation results consists of two steps.
+
+First, do
+
+.. code-block:: bash
+
+    $ python prep_hierarchical_inference.py
+
+This script loops across each injection, reads in posteriors and downselects to a reasonable number of samples, calculates prior weights, and saves these intermediate results to the directory :file:`injection-study/tmp/`.
+
+After this preparation step, hierarchical inference is performed with *emcee* [3]_ by running one or both of the following scripts:
+
+* :file:`run_emcee_plPeak.py`
+   * *Number of parameters*: 11
+   * *Mass model*: Mixture between power law and Gaussian components for :math:`p(m_1)`; power law for :math:`p(m_2|m_1)`
+   * *Spin model*: Normal distribution for :math:`p(\chi_\mathrm{eff}|q)`, truncated on :math:`-1 \leq \chi_\mathrm{eff} \leq 1`
+   * *Spin vs. mass ratio correlation*: Yes
+
+* :file:`run_emcee_bpl.py`
+   * *Number of parameters*: 9
+   * *Mass model*: Broken power law for :math:`p(m_1)`; power law for :math:`p(m_2|m_1)`
+   * *Spin model*: Normal distribution for :math:`p(\chi_\mathrm{eff}|q)`, truncated on :math:`-1 \leq \chi_\mathrm{eff} \leq 1`
+   * *Spin vs. mass ratio correlation*: Yes
+    
+Output from the first script, :file:`run_emcee_plpeak.py`, is adopted as our fiducial result presented in the paper.
+Note, though, that the mass model presumed in this script is deliberaly *mismatched* to the injected mass distribution, which takes the form of a broken power law.
+The second script, meanwhile, adopts a mass model consistent with our injected population.
+
+As in the case of our hierarchical inference over true LIGO-Virgo events (see :ref:`Code`), both of the above scripts invoke the likelihoods defined in :file:`code/likelihoods.py`.
+Additionally, both scripts adopt the checkpointing system described in :ref:`Running the inference`.
+
+Raw sample chains from *emcee* are saved in files of the form :file:`emcee_samples_plPeak_r00.npy`, in which is stored an array of size :code:`(n,N,m)`, where :code:`n` is the number of walkers used in *emcee*, :code:`N` is the number of steps taken by each walker, and :code:`m` is the dimensionality of our model. 
+The final step is to post-process this output via
+
+.. code-block:: bash
+
+    $ python ../code/post_processing.py emcee_samples_plPeak_r00.npy 
+
+which will create a new file :file:`processed_emcee_samples_plPeak_r00.npy` that has been downsampled and collapsed to a 2D array of independent posterior samples.
+See :ref:`Post-processing` for more information and examples concerning these output files.
 
 .. [1] https://lscsoft.docs.ligo.org/bilby/
 .. [2] https://dynesty.readthedocs.io/en/latest/
+.. [3] https://emcee.readthedocs.io/en/stable/
 

@@ -296,7 +296,7 @@ To produce an injected catalog corresponding to a more realistic spin distributi
 $ condor_submit_dag bilby.dag
 </pre></div>
 </div>
-<p>Parameter estimation is done using the <em>Bilby</em> package <a class="footnote-reference brackets" href="#id3" id="id1">1</a> in conjunction with the <em>dynesty</em> nested sampler <a class="footnote-reference brackets" href="#id4" id="id2">2</a>, and is launched with the script <code class="file docutils literal notranslate"><span class="pre">launchBilby.py</span></code>.
+<p>Parameter estimation is done using the <em>Bilby</em> package <a class="footnote-reference brackets" href="#id4" id="id1">1</a> in conjunction with the <em>dynesty</em> nested sampler <a class="footnote-reference brackets" href="#id5" id="id2">2</a>, and is launched with the script <code class="file docutils literal notranslate"><span class="pre">launchBilby.py</span></code>.
 This script takes three arguments:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python launchBilby.py --h
 usage: launchBilby.py <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>-json JSON<span class="o">]</span> <span class="o">[</span>-job JOB<span class="o">]</span> <span class="o">[</span>-outdir OUTDIR<span class="o">]</span>
@@ -407,12 +407,56 @@ In the case of event 03055, running with a restricted chirp mass prior yields a 
 </div>
 <div class="section" id="hierarchical-inference">
 <h2>Hierarchical inference<a class="headerlink" href="#hierarchical-inference" title="Permalink to this headline">¶</a></h2>
+<p>Running hierarchical inference over our parameter estimation results consists of two steps.</p>
+<p>First, do</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python prep_hierarchical_inference.py
+</pre></div>
+</div>
+<p>This script loops across each injection, reads in posteriors and downselects to a reasonable number of samples, calculates prior weights, and saves these intermediate results to the directory <code class="file docutils literal notranslate"><span class="pre">injection-study/tmp/</span></code>.</p>
+<p>After this preparation step, hierarchical inference is performed with <em>emcee</em> <a class="footnote-reference brackets" href="#id6" id="id3">3</a> by running one or both of the following scripts:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><code class="file docutils literal notranslate"><span class="pre">run_emcee_plPeak.py</span></code></dt><dd><ul>
+<li><p><em>Number of parameters</em>: 11</p></li>
+<li><p><em>Mass model</em>: Mixture between power law and Gaussian components for <span class="math notranslate nohighlight">\(p(m_1)\)</span>; power law for <span class="math notranslate nohighlight">\(p(m_2|m_1)\)</span></p></li>
+<li><p><em>Spin model</em>: Normal distribution for <span class="math notranslate nohighlight">\(p(\chi_\mathrm{eff}|q)\)</span>, truncated on <span class="math notranslate nohighlight">\(-1 \leq \chi_\mathrm{eff} \leq 1\)</span></p></li>
+<li><p><em>Spin vs. mass ratio correlation</em>: Yes</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="file docutils literal notranslate"><span class="pre">run_emcee_bpl.py</span></code></dt><dd><ul>
+<li><p><em>Number of parameters</em>: 9</p></li>
+<li><p><em>Mass model</em>: Broken power law for <span class="math notranslate nohighlight">\(p(m_1)\)</span>; power law for <span class="math notranslate nohighlight">\(p(m_2|m_1)\)</span></p></li>
+<li><p><em>Spin model</em>: Normal distribution for <span class="math notranslate nohighlight">\(p(\chi_\mathrm{eff}|q)\)</span>, truncated on <span class="math notranslate nohighlight">\(-1 \leq \chi_\mathrm{eff} \leq 1\)</span></p></li>
+<li><p><em>Spin vs. mass ratio correlation</em>: Yes</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Output from the first script, <code class="file docutils literal notranslate"><span class="pre">run_emcee_plpeak.py</span></code>, is adopted as our fiducial result presented in the paper.
+Note, though, that the mass model presumed in this script is deliberaly <em>mismatched</em> to the injected mass distribution, which takes the form of a broken power law.
+The second script, meanwhile, adopts a mass model consistent with our injected population.</p>
+<p>As in the case of our hierarchical inference over true LIGO-Virgo events (see <a class="reference internal" href="code.html#code"><span class="std std-ref">Code</span></a>), both of the above scripts invoke the likelihoods defined in <code class="file docutils literal notranslate"><span class="pre">code/likelihoods.py</span></code>.
+Additionally, both scripts adopt the checkpointing system described in <a class="reference internal" href="code.html#running-the-inference"><span class="std std-ref">Running the inference</span></a>.</p>
+<p>Raw sample chains from <em>emcee</em> are saved in files of the form <code class="file docutils literal notranslate"><span class="pre">emcee_samples_plPeak_r00.npy</span></code>, in which is stored an array of size <code class="code docutils literal notranslate"><span class="pre">(n,N,m)</span></code>, where <code class="code docutils literal notranslate"><span class="pre">n</span></code> is the number of walkers used in <em>emcee</em>, <code class="code docutils literal notranslate"><span class="pre">N</span></code> is the number of steps taken by each walker, and <code class="code docutils literal notranslate"><span class="pre">m</span></code> is the dimensionality of our model.
+The final step is to post-process this output via</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python ../code/post_processing.py emcee_samples_plPeak_r00.npy
+</pre></div>
+</div>
+<p>which will create a new file <code class="file docutils literal notranslate"><span class="pre">processed_emcee_samples_plPeak_r00.npy</span></code> that has been downsampled and collapsed to a 2D array of independent posterior samples.
+See <a class="reference internal" href="code.html#post-processing"><span class="std std-ref">Post-processing</span></a> for more information and examples concerning these output files.</p>
 <dl class="footnote brackets">
-<dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
 <dd><p><a class="reference external" href="https://lscsoft.docs.ligo.org/bilby/">https://lscsoft.docs.ligo.org/bilby/</a></p>
 </dd>
-<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dt class="label" id="id5"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
 <dd><p><a class="reference external" href="https://dynesty.readthedocs.io/en/latest/">https://dynesty.readthedocs.io/en/latest/</a></p>
+</dd>
+<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
+<dd><p><a class="reference external" href="https://emcee.readthedocs.io/en/stable/">https://emcee.readthedocs.io/en/stable/</a></p>
 </dd>
 </dl>
 </div>

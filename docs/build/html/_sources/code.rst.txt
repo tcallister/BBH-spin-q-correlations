@@ -139,8 +139,8 @@ The following likelihood models are implemented:
    * *Spin model*: Normal distribution for :math:`p(\chi_\mathrm{eff})`, truncated on the variable range :math:`\chi_\mathrm{min} \leq \chi_\mathrm{eff} \leq 1`
    * *Spin vs. mass ratio correlation*: No
 
-Running the inference:
-----------------------
+Running the inference
+---------------------
 
 We use the MCMC package *emcee* [1]_ to perform the majority of our inference and parameter estimation.
 Inference with *emcee* is done by calling these scripts, which invoke the likelihoods listed above together with various subsets of events.

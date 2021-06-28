@@ -98,7 +98,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Code</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#auxiliary-functions">Auxiliary functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#likelihood-definitions">Likelihood definitions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#running-the-inference">Running the inference:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-inference">Running the inference</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#post-processing">Post-processing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#evaluating-evidences">Evaluating evidences</a></li>
 </ul>
@@ -317,7 +317,7 @@ Each expects four arguments:</p>
 </dl>
 </div>
 <div class="section" id="running-the-inference">
-<h2>Running the inference:<a class="headerlink" href="#running-the-inference" title="Permalink to this headline">¶</a></h2>
+<h2>Running the inference<a class="headerlink" href="#running-the-inference" title="Permalink to this headline">¶</a></h2>
 <p>We use the MCMC package <em>emcee</em> <a class="footnote-reference brackets" href="#id5" id="id1">1</a> to perform the majority of our inference and parameter estimation.
 Inference with <em>emcee</em> is done by calling these scripts, which invoke the likelihoods listed above together with various subsets of events.
 Unless stated otherwise, the events used are the 44 BBHs in GWTC-2 with false alarm rates below one per year, excluding GW190814.</p>
@@ -490,7 +490,7 @@ The following four models are defined, two of which are effectively copies of th
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>As in <span class="xref std std-ref">Running the inference</span>, these scripts are by default set up to launch a decent number of parallel processes.
+<p>As in <a class="reference internal" href="#running-the-inference"><span class="std std-ref">Running the inference</span></a>, these scripts are by default set up to launch a decent number of parallel processes.
 If you wish to reduce this number, then change the lines</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">tmpfile</span><span class="p">):</span>
     <span class="o">...</span>
