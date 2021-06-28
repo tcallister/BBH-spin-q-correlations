@@ -1,0 +1,9 @@
+\newcommand{\evidenceNoEvolNoNeg}{0.00}
+\newcommand{\evidenceNoEvolNoNegError}{0.04}
+\newcommand{\evidenceNoEvolYesNeg}{1.29}
+\newcommand{\evidenceNoEvolYesNegError}{0.04}
+\newcommand{\evidenceYesEvolNoNeg}{3.54}
+\newcommand{\evidenceYesEvolNoNegError}{0.03}
+\newcommand{\evidenceYesEvolYesNeg}{3.64}
+\newcommand{\evidenceYesEvolYesNegError}{0.03}
+\newcommand{\bayesNegWhenCorrelated}{0.10}
