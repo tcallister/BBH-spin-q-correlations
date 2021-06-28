@@ -1,0 +1,4 @@
+\newcommand{\FracBelow}{77\%}
+\newcommand{\meanObsSlopeBase}{-0.1}
+\newcommand{\meanObsSlopeEvol}{-0.45}
+\newcommand{\meanMockSlopeEvol}{-0.48}
