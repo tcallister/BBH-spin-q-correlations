@@ -1,0 +1,5 @@
+\newcommand{\percentAlphaNegativeNoOhFiveSeventeen}{99.1\%}
+\newcommand{\percentAlphaNegativeNoOhFourTwelve}{99.0\%}
+\newcommand{\percentAlphaNegativeNoOhFourTwelveOrOhFiveSeventeen}{95.2\%}
+\newcommand{\percentAlphaNegativeWithOhEightFourteen}{92.6\%}
+\newcommand{\percentBetaNegativeWithOhEightFourteen}{96.8\%}

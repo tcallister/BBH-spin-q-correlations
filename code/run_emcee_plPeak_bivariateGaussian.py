@@ -108,7 +108,7 @@ print(initial_walkers)
 dim = 15
 
 # Run
-nSteps = 10000
+nSteps = 15000
 sampler = mc.EnsembleSampler(nWalkers,dim,logp_powerLawPeak_bivariateGaussian,args=[sampleDict,injectionDict,priorDict],threads=12)
 for i,result in enumerate(sampler.sample(initial_walkers,iterations=nSteps)):
     if i%10==0:
