@@ -1,0 +1,324 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Figure Generation &mdash; BBH-spin-q-correlations 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Mock Population Study" href="injections.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BBH-spin-q-correlations
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="input.html">Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="injections.html">Mock Population Study</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Figure Generation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#precomputing-reweighted-posteriors">Precomputing reweighted posteriors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#making-figures">Making figures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#making-latex-macros">Making Latex macros</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BBH-spin-q-correlations</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Figure Generation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/figures.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="figure-generation">
+<h1>Figure Generation<a class="headerlink" href="#figure-generation" title="Permalink to this headline">¶</a></h1>
+<p>Code to generate the figures and Latex macros included in our paper text is included in the folder <code class="file docutils literal notranslate"><span class="pre">BBH-spin-q-correlations/figures/</span></code>.
+In particular, these results are obtained by opening and running the following three Jupyter notebooks <a class="footnote-reference brackets" href="#id3" id="id1">1</a>, which we will discuss in turn below:</p>
+<ul class="simple">
+<li><p><code class="file docutils literal notranslate"><span class="pre">posterior_reweighting.ipynb</span></code></p></li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">make_figures.ipynb</span></code></p></li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">make-macros.ipynb</span></code></p></li>
+</ul>
+<div class="section" id="precomputing-reweighted-posteriors">
+<h2>Precomputing reweighted posteriors<a class="headerlink" href="#precomputing-reweighted-posteriors" title="Permalink to this headline">¶</a></h2>
+<p>Several figures in the paper involve showing <em>reweighted posteriors</em>, single-event measurements from which we have removed the default prior and applied a new, population-informed prior.
+Other figures involve <em>predictice checks</em>, in which we compare observed data with <em>expected data</em> if a given population model is correct.
+Computing reweighted posteriors and/or predicted detections is a semi-involved process, involving a loop over our hyperparameter samples and a random downsamping of single-event posteriors according to new population-informed weights.
+To minimize the work that’s done in the actual plotting notebook (<code class="file docutils literal notranslate"><span class="pre">make_figures.ipynb</span></code>), we use <code class="file docutils literal notranslate"><span class="pre">posterior_reweighting.ipynb</span></code> to pre-compute and save much of this data in advance.</p>
+<p>Open this notebook,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ jupyter notebook posterior_reweighting.ipynb
+</pre></div>
+</div>
+<p>and run all cells,</p>
+<a class="with-border reference internal image-reference" href="_images/run_notebook.png"><img alt="_images/run_notebook.png" class="with-border align-center" src="_images/run_notebook.png" style="width: 700px;" /></a>
+<p>to produce the following files:</p>
+<ul>
+<li><p><code class="file docutils literal notranslate"><span class="pre">reweighted_samples_noEvolution.npy</span></code></p>
+<blockquote>
+<div><p>Reweighted single-event effective spin and mass ratio measurements, according to the <code class="code docutils literal notranslate"><span class="pre">logp_powerLawPeak_noEvol</span></code> likelihood model discussed in <a class="reference internal" href="code.html#likelihood-definitions"><span class="std std-ref">Likelihood definitions</span></a>.
+Measurements are stored in a dictionary:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="o">&gt;&gt;</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;reweighted_samples_noEvolution.npy&#39;</span><span class="p">,</span><span class="n">allow_pickle</span><span class="o">=</span><span class="bp">True</span><span class="p">)[()]</span>
+<span class="o">&gt;&gt;</span> <span class="nb">dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="n">dict_keys</span><span class="p">([</span><span class="s1">&#39;mock_q&#39;</span><span class="p">,</span> <span class="s1">&#39;mock_chi&#39;</span><span class="p">,</span> <span class="s1">&#39;resampled_q&#39;</span><span class="p">,</span> <span class="s1">&#39;resampled_chi&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>where <code class="code docutils literal notranslate"><span class="pre">dict['resampled_q']</span></code> and <code class="code docutils literal notranslate"><span class="pre">dict['resampled_chi']</span></code> are each <code class="code docutils literal notranslate"><span class="pre">(n,m)</span></code> arrays containing reweighted mass ratio and effective spin samples, respectively.
+Here, <code class="code docutils literal notranslate"><span class="pre">n</span></code> is the number of BBH events in our catalog and <code class="code docutils literal notranslate"><span class="pre">m</span></code> the number of reweighted posterior samples for each event.
+Each of these <code class="code docutils literal notranslate"><span class="pre">m</span></code> samples is conditioned on a different random draw from our posterior on the population-level parameters measured in our analysis.
+Meanwhile, <code class="code docutils literal notranslate"><span class="pre">dict['mock_q']</span></code> and <code class="code docutils literal notranslate"><span class="pre">dict['mock_chi']</span></code> are <code class="code docutils literal notranslate"><span class="pre">(n,m)</span></code> arrays containing a sequence of mock observed catalogs, each with <code class="code docutils literal notranslate"><span class="pre">n</span></code> events, corresponding to our <code class="code docutils literal notranslate"><span class="pre">m</span></code> random draws from our population-level posteriors.
+Note that these mock catalogs <em>include</em> the impact of selection effects.</p>
+</div></blockquote>
+</li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">reweighted_samples_yesEvolution.npy</span></code></p>
+<blockquote>
+<div><p>As above, but using the <code class="code docutils literal notranslate"><span class="pre">logp_powerLawPeak</span></code> likelihood model that includes the possibility of spin and mass ratio correlations.</p>
+</div></blockquote>
+</li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">reweighted_samples_yesEvolution_no190412.npy</span></code></p>
+<blockquote>
+<div><p>Same as above, but using results obtained when excluding GW190412.</p>
+</div></blockquote>
+</li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">reweighted_samples_yesEvolution_w190814.npy</span></code></p>
+<blockquote>
+<div><p>Same as above, but using results obtained when <em>including</em> GW190814</p>
+</div></blockquote>
+</li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">injection_samples_reweightedToIsotropy.npy</span></code></p>
+<blockquote>
+<div><p>This file contains reweighted parameter estimation samples from the mock injection study described in <a class="reference internal" href="injections.html#mock-population-study"><span class="std std-ref">Mock Population Study</span></a>.
+When performing parameter estimation on our simulated signals, we assume purely <em>aligned</em> component spins, with a prior that is uniform on spin magnitude.
+The fiducial parameter estimation samples released by the LIGO-Virgo Collaboration for GWTC-2, meanwhile, adopt a prior that is uniform in spin magnitude but <em>isotropic in spin orientation</em> <a class="footnote-reference brackets" href="#id4" id="id2">2</a>.
+These choices correspond to different implicit priors on <span class="math notranslate nohighlight">\(\chi_\mathrm{eff}\)</span> and hence these two sets of results cannot be automatically compared in an apples-to-apples way.</p>
+<p>To allow a direct comparison (e.g. between Figs. 1a and 9a in the paper text), this file contains parameter estimation samples that have been reweighted to the <em>same</em> implicit <span class="math notranslate nohighlight">\(\chi_\mathrm{eff}\)</span> prior that appears in the LIGO/Virgo results.
+Samples are accessed as a dictionary, with numbered keys that label each of our simulated signals:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="o">&gt;&gt;</span> <span class="n">reweighted_injection_samps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;injection_samples_reweightedToIsotropy.npy&#39;</span><span class="p">,</span><span class="n">allow_pickle</span><span class="o">=</span><span class="bp">True</span><span class="p">)[()]</span>
+<span class="o">&gt;&gt;</span> <span class="n">reweighted_injection_samps</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="n">dict_keys</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">49</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Each event key, in turn, leads to another dictionary containing mass ratio (<code class="code docutils literal notranslate"><span class="pre">q</span></code>) and effective spin (<code class="code docutils literal notranslate"><span class="pre">x</span></code>) samples:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">reweighted_injection_samps</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="n">dict_keys</span><span class="p">([</span><span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">reweighted_injection_samps</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="s1">&#39;q&#39;</span><span class="p">]</span>
+<span class="n">array</span><span class="p">([</span><span class="mf">0.82542427</span><span class="p">,</span> <span class="mf">0.5812419</span> <span class="p">,</span> <span class="mf">0.77971792</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="mf">0.8653652</span> <span class="p">,</span> <span class="mf">0.55416062</span><span class="p">,</span>
+       <span class="mf">0.79111037</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">reweighted_injection_samps</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">]</span>
+<span class="n">array</span><span class="p">([</span> <span class="mf">0.01672742</span><span class="p">,</span>  <span class="mf">0.06527243</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1468124</span> <span class="p">,</span> <span class="o">...</span><span class="p">,</span>  <span class="mf">0.02260662</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">0.04104319</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.04593011</span><span class="p">])</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="making-figures">
+<h2>Making figures<a class="headerlink" href="#making-figures" title="Permalink to this headline">¶</a></h2>
+<p>With most of the necessary data precomputed, generating figures is as simple as opening the notebook <code class="code docutils literal notranslate"><span class="pre">make_figures.ipynb</span></code> and running all cells.
+Doing so will save out <code class="code docutils literal notranslate"><span class="pre">.pdf</span></code> versions of each figure in this directory.</p>
+</div>
+<div class="section" id="making-latex-macros">
+<h2>Making Latex macros<a class="headerlink" href="#making-latex-macros" title="Permalink to this headline">¶</a></h2>
+<p>Similarly, Latex macrofiles defining numerical results quoted in our paper text are generated by opening and running <code class="code docutils literal notranslate"><span class="pre">make-macros.ipynb</span></code>, which creates and writes to several files of the form <code class="file docutils literal notranslate"><span class="pre">macros_*txt</span></code>.</p>
+<dl class="footnote brackets">
+<dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p><a class="reference external" href="https://jupyter.org">https://jupyter.org</a></p>
+</dd>
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p><a class="reference external" href="https://dcc.ligo.org/LIGO-P2000223/public">https://dcc.ligo.org/LIGO-P2000223/public</a></p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="injections.html" class="btn btn-neutral float-left" title="Mock Population Study" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Tom Callister.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
