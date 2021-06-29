@@ -38,9 +38,9 @@ to produce the following files:
 
     .. code-block:: python
 
-        >> import numpy as np
-        >> dict = np.load('reweighted_samples_noEvolution.npy',allow_pickle=True)[()]
-        >> dict.keys()
+        >>> import numpy as np
+        >>> dict = np.load('reweighted_samples_noEvolution.npy',allow_pickle=True)[()]
+        >>> dict.keys()
         dict_keys(['mock_q', 'mock_chi', 'resampled_q', 'resampled_chi'])
 
     where :code:`dict['resampled_q']` and :code:`dict['resampled_chi']` are each :code:`(n,m)` arrays containing reweighted mass ratio and effective spin samples, respectively.
@@ -73,16 +73,16 @@ to produce the following files:
 
     .. code-block:: python
 
-        >> import numpy as np
-        >> reweighted_injection_samps = np.load('injection_samples_reweightedToIsotropy.npy',allow_pickle=True)[()]
-        >> reweighted_injection_samps.keys()
+        >>> import numpy as np
+        >>> reweighted_injection_samps = np.load('injection_samples_reweightedToIsotropy.npy',allow_pickle=True)[()]
+        >>> reweighted_injection_samps.keys()
         dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49])
 
     Each event key, in turn, leads to another dictionary containing mass ratio (:code:`q`) and effective spin (:code:`x`) samples:
 
     .. code-block:: python
 
-        >> reweighted_injection_samps[5].keys()
+        >>> reweighted_injection_samps[5].keys()
         dict_keys(['q', 'x'])
         >>>
         >>> reweighted_injection_samps[5]['q']
